@@ -1,0 +1,24 @@
+.not-found {
+  min-height: 65vh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.not-found > span {
+  color: var(--green-soft);
+  font-family: Georgia, serif;
+  font-size: 140px;
+  font-weight: 700;
+  line-height: 0.8;
+}
+
+.not-found h1 {
+  margin: 25px 0 7px;
+  font-size: 34px;
+}
+
+.not-found p {
+  margin-bottom: 22px;
+  color: var(--muted);
+}

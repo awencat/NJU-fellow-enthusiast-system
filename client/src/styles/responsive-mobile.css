@@ -1,0 +1,338 @@
+@media (max-width: 620px) {
+  body {
+    font-size: 14px;
+  }
+
+  .brand-copy small {
+    display: none;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .header-actions .admin-icon {
+    display: none;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+    line-height: 1.18;
+  }
+
+  .hero-copy > p {
+    font-size: 14px;
+  }
+
+  .hero-search {
+    min-height: 52px;
+    padding-left: 12px;
+  }
+
+  .hero-search button {
+    padding: 0 12px;
+    font-size: 11px;
+  }
+
+  .hero-collage {
+    height: 350px;
+  }
+
+  .hero-photo-main {
+    width: 235px;
+    height: 300px;
+  }
+
+  .hero-photo-small {
+    width: 120px;
+    height: 135px;
+  }
+
+  .hero-note {
+    width: 145px;
+    min-height: 95px;
+    padding: 20px 16px;
+  }
+
+  .hero-note strong {
+    font-size: 14px;
+  }
+
+  .hero-float-card {
+    right: 0;
+    width: 152px;
+  }
+
+  .section-block {
+    margin-top: 58px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .post-grid,
+  .mate-grid,
+  .exchange-grid,
+  .mates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-cover {
+    height: 205px;
+  }
+
+  .mate-callout {
+    margin-top: 58px;
+    padding: 32px 24px;
+  }
+
+  .home-stats span {
+    font-size: 10px;
+  }
+
+  .mates-heading {
+    padding: 29px 24px;
+  }
+
+  .mate-search-panel {
+    padding: 20px 17px;
+  }
+
+  .search-field.large {
+    min-height: 50px;
+  }
+
+  .list-summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .editor-card {
+    padding: 22px 17px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .article-header h1 {
+    font-size: 32px;
+  }
+
+  .article-actions {
+    padding: 11px 10px;
+  }
+
+  .article-actions button {
+    padding: 7px 9px;
+    white-space: nowrap;
+  }
+
+  .owner-actions, .comment-composer {
+    flex-wrap: wrap;
+  }
+
+  .comment-composer .button {
+    margin-left: auto;
+  }
+
+  .auth-story {
+    min-height: 430px;
+    padding: 44px 24px;
+  }
+
+  .auth-story h1 {
+    font-size: 42px;
+  }
+
+  .auth-quote {
+    display: none;
+  }
+
+  .mate-detail-main {
+    padding: 26px 20px;
+  }
+
+  .mate-detail-main header h1 {
+    font-size: 30px;
+  }
+
+  .mate-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mate-apply-panel {
+    padding: 22px 19px;
+  }
+
+  .application-card {
+    padding: 15px;
+  }
+
+  .page-heading h1 {
+    font-size: 34px;
+  }
+
+  .messages-page {
+    padding-top: 23px;
+  }
+
+  .chat-shell {
+    position: relative;
+    display: block;
+    height: calc(100vh - 200px);
+    min-height: 480px;
+  }
+
+  .conversation-list {
+    height: 100%;
+    border-right: 0;
+  }
+
+  .chat-shell.chat-has-selection .conversation-list {
+    display: none;
+  }
+
+  .chat-panel {
+    display: none;
+    height: 100%;
+  }
+
+  .chat-shell.chat-has-selection .chat-panel {
+    display: flex;
+  }
+
+  .chat-back {
+    display: inline-grid;
+  }
+
+  .message-bubble-wrap {
+    max-width: 78%;
+  }
+
+  .profile-hero {
+    padding: 25px 20px;
+  }
+
+  .profile-identity {
+    align-items: flex-start;
+  }
+
+  .profile-identity h1 {
+    font-size: 29px;
+  }
+
+  .profile-stat-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profile-stat-row div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .profile-stat-row div:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .profile-edit-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profile-tabs {
+    width: 100%;
+  }
+
+  .profile-tabs button {
+    flex: 1;
+    padding-inline: 7px;
+    font-size: 10px;
+  }
+
+  .application-summary-list > article {
+    align-items: flex-start;
+  }
+
+  .application-summary-list > article > a:last-child {
+    display: none;
+  }
+
+  .admin-heading h1 {
+    font-size: 31px;
+  }
+
+  .admin-publish-actions {
+    width: 100%;
+  }
+
+  .admin-publish-actions .button {
+    flex: 1;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admin-stats article {
+    padding: 13px;
+  }
+
+  .admin-stats article:last-child {
+    grid-column: span 2;
+  }
+
+  .admin-tabs {
+    overflow-x: auto;
+  }
+
+  .admin-tabs button {
+    flex: 0 0 auto;
+    padding-inline: 10px;
+  }
+
+  .report-admin-card {
+    padding: 15px;
+  }
+
+  .report-card-head {
+    flex-wrap: wrap;
+  }
+
+  .report-card-head .muted {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .report-reason {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .report-reason span {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .report-resolution select,
+  .report-resolution input,
+  .report-resolution .button {
+    width: 100%;
+  }
+
+  .message-context > div {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-main {
+    width: 100%;
+    gap: 10px 24px;
+  }
+}

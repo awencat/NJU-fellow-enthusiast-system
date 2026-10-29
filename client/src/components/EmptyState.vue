@@ -11,7 +11,7 @@ withDefaults(
 </script>
 
 <template>
-  <div class="empty-state">
+  <div class="empty-state ui-stack">
     <span><SearchX :size="26" /></span>
     <h3>{{ title }}</h3>
     <p>{{ text }}</p>

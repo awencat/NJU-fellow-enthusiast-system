@@ -75,21 +75,21 @@ onMounted(load);
 
 <template>
   <div class="page-shell">
-    <header class="page-heading split-heading">
+    <header class="page-heading split-heading ui-heading-row">
       <div>
-        <span class="eyebrow"><Sparkles :size="14" /> 同好交流</span>
+        <span class="eyebrow ui-inline"><Sparkles :size="14" /> 同好交流</span>
         <h1>发现共鸣，也分享你的日常</h1>
         <p>一篇随手记录、一场校园活动，都可能成为认识新朋友的起点。</p>
       </div>
       <RouterLink
-        class="button"
+        class="button ui-inline"
         :to="auth.state.user ? '/exchange/new' : '/login?redirect=/exchange/new'"
       >
         <PenLine :size="17" /> 写一篇分享
       </RouterLink>
     </header>
 
-    <div class="filter-bar">
+    <div class="filter-bar ui-between">
       <div class="segmented-tabs">
         <button :class="{ active: !kind }" @click="kind = ''; applyFilters()">
           全部
@@ -101,7 +101,7 @@ onMounted(load);
           <Newspaper :size="15" /> 校园新闻
         </button>
       </div>
-      <form class="search-field compact" @submit.prevent="applyFilters">
+      <form class="search-field compact ui-row ui-panel" @submit.prevent="applyFilters">
         <Search :size="17" />
         <input v-model="q" type="search" placeholder="搜索标题或正文" />
         <button type="submit">搜索</button>

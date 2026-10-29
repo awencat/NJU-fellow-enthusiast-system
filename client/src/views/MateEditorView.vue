@@ -97,15 +97,15 @@ onMounted(load);
 
 <template>
   <div class="editor-page page-shell narrow">
-    <button class="back-link" @click="router.back()"><ArrowLeft :size="17" /> 返回</button>
+    <button class="back-link ui-inline" @click="router.back()"><ArrowLeft :size="17" /> 返回</button>
     <LoadingBlock v-if="loading" />
     <template v-else>
       <header class="page-heading compact-heading">
-        <span class="eyebrow">{{ editId ? "编辑邀请" : "发起邀请" }}</span>
+        <span class="eyebrow ui-inline">{{ editId ? "编辑邀请" : "发起邀请" }}</span>
         <h1>{{ editId ? "调整你的搭子邀请" : "说说你想找怎样的同伴" }}</h1>
         <p>清楚的时间、地点和期待，会让彼此更安心。</p>
       </header>
-      <form class="editor-card stack-form mate-editor" @submit.prevent="submit">
+      <form class="editor-card stack-form mate-editor ui-panel ui-stack" @submit.prevent="submit">
         <label>
           <span>标题</span>
           <input
@@ -118,7 +118,7 @@ onMounted(load);
 
         <fieldset class="tag-picker">
           <legend>标签 <small>最多 6 个</small></legend>
-          <div class="tag-options">
+          <div class="tag-options ui-wrap">
             <button
               v-for="tag in suggestedTags"
               :key="tag"
@@ -136,10 +136,10 @@ onMounted(load);
               placeholder="自定义标签"
               @keydown.enter.prevent="addCustomTag"
             />
-            <button type="button" class="text-button" @click="addCustomTag">添加</button>
+            <button type="button" class="text-button ui-inline" @click="addCustomTag">添加</button>
           </div>
-          <div class="selected-tags">
-            <span v-for="tag in form.tags" :key="tag" class="tag">
+          <div class="selected-tags ui-wrap">
+            <span v-for="tag in form.tags" :key="tag" class="tag ui-inline">
               {{ tag }}
               <button type="button" @click="toggleTag(tag)"><X :size="12" /></button>
             </span>
@@ -192,8 +192,8 @@ onMounted(load);
         <ImageUpload v-model="form.imageUrl" />
 
         <div class="form-actions">
-          <button type="button" class="button secondary" @click="router.back()">取消</button>
-          <button class="button warm-button" :disabled="submitting">
+          <button type="button" class="button secondary ui-inline" @click="router.back()">取消</button>
+          <button class="button warm-button ui-inline" :disabled="submitting">
             <Save :size="17" />
             {{ submitting ? "正在保存…" : editId ? "保存修改" : "发布邀请" }}
           </button>

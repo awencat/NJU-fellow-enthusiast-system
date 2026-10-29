@@ -57,7 +57,7 @@ async function submit() {
 
 <template>
   <Modal :open="open" title="举报内容" @close="emit('close')">
-    <form class="stack-form" @submit.prevent="submit">
+    <form class="stack-form ui-stack" @submit.prevent="submit">
       <label>
         <span>举报原因</span>
         <select v-model="reason">
@@ -80,7 +80,7 @@ async function submit() {
       <p class="form-note">
         管理员只会查看被举报内容，以及私信举报所需的相邻上下文。
       </p>
-      <button class="button danger-button" :disabled="submitting">
+      <button class="button danger-button ui-inline" :disabled="submitting">
         {{ submitting ? "正在提交…" : "提交举报" }}
       </button>
     </form>

@@ -1,0 +1,105 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 20px;
+  background: rgba(28, 38, 33, 0.52);
+  backdrop-filter: blur(4px);
+}
+
+.modal-card {
+  width: 100%;
+  max-height: min(84vh, 820px);
+  overflow: auto;
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: 0 30px 80px rgba(18, 29, 23, 0.25);
+}
+
+.modal-header {
+  gap: 16px;
+  padding: 20px 22px 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 23px;
+}
+
+.modal-body {
+  padding: 23px;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.modal-enter-active .modal-card,
+.modal-leave-active .modal-card {
+  transition: transform 0.22s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-from .modal-card,
+.modal-leave-to .modal-card {
+  transform: translateY(12px) scale(0.98);
+}
+
+.toast-stack {
+  position: fixed;
+  z-index: 2000;
+  top: 92px;
+  right: 22px;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  gap: 9px;
+  min-width: 240px;
+  max-width: 390px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-small);
+  font-size: 13px;
+}
+
+.toast-success svg {
+  color: var(--green);
+}
+
+.toast-error svg {
+  color: var(--red);
+}
+
+.toast-info svg {
+  color: var(--warm-dark);
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: 0.25s ease;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.menu-enter-active,
+.menu-leave-active {
+  transition: 0.2s ease;
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}

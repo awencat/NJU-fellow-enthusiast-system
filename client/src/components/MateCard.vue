@@ -8,32 +8,32 @@ defineProps<{ mate: MatePost }>();
 </script>
 
 <template>
-  <article class="mate-card">
+  <article class="mate-card ui-stack ui-panel ui-card">
     <RouterLink :to="`/mates/${mate.id}`" class="mate-card-main">
       <div class="mate-card-top">
-        <div class="tag-row">
-          <span v-for="tag in mate.tags" :key="tag" class="tag">{{ tag }}</span>
+        <div class="tag-row ui-wrap">
+          <span v-for="tag in mate.tags" :key="tag" class="tag ui-inline">{{ tag }}</span>
         </div>
         <ArrowUpRight class="mate-arrow" :size="20" />
       </div>
       <h3>{{ mate.title }}</h3>
-      <p class="mate-summary">{{ mate.details }}</p>
-      <div class="mate-meta">
+      <p class="mate-summary ui-summary">{{ mate.details }}</p>
+      <div class="mate-meta ui-stack">
         <span v-if="mate.location">
           <MapPin :size="15" /> {{ mate.location }}
         </span>
         <span><Clock3 :size="15" /> {{ mate.duration }}</span>
       </div>
     </RouterLink>
-    <div class="mate-card-footer">
-      <div class="inline-user">
+    <div class="mate-card-footer ui-between">
+      <div class="inline-user ui-row">
         <Avatar :user="mate.author" :size="30" />
         <div>
           <strong>{{ mate.author.nickname }}</strong>
           <small>{{ relativeTime(mate.createdAt) }}</small>
         </div>
       </div>
-      <span class="application-count">
+      <span class="application-count ui-inline">
         <Users :size="15" /> {{ mate.applicationCount }} 人申请
       </span>
     </div>

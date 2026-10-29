@@ -1,0 +1,138 @@
+.auth-page {
+  display: grid;
+  grid-template-columns: minmax(400px, 0.95fr) minmax(460px, 1.05fr);
+  min-height: calc(100vh - 76px);
+}
+
+.auth-story {
+  position: relative;
+  overflow: hidden;
+  padding: 65px clamp(35px, 7vw, 90px);
+  background:
+    linear-gradient(140deg, rgba(26, 54, 43, 0.96), rgba(37, 75, 58, 0.92)),
+    var(--green-dark);
+  color: white;
+}
+
+.auth-story::before,
+.auth-story::after {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-round);
+  content: "";
+}
+
+.auth-story::before {
+  top: -150px;
+  left: -100px;
+  width: 400px;
+  height: 400px;
+}
+
+.auth-story::after {
+  right: -120px;
+  bottom: -170px;
+  width: 470px;
+  height: 470px;
+  border-width: 55px;
+}
+
+.auth-story-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 580px;
+}
+
+.auth-story .hero-kicker {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+  color: #f0ce99;
+}
+
+.auth-story h1 {
+  margin: 25px 0 20px;
+  font-size: clamp(45px, 6vw, 70px);
+  line-height: 1.25;
+}
+
+.auth-story h1 em {
+  color: #f1c88c;
+}
+
+.auth-story-inner > p {
+  max-width: 500px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.9;
+}
+
+.auth-points {
+  gap: 9px;
+  margin-top: 27px;
+}
+
+.auth-points span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-pill);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+}
+
+.auth-quote {
+  max-width: 450px;
+  margin-top: 55px;
+  padding-left: 18px;
+  border-left: 2px solid #dfaa69;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.auth-form-wrap {
+  padding: 50px;
+}
+
+.auth-card {
+  width: min(430px, 100%);
+}
+
+.auth-tabs {
+  margin-bottom: 32px;
+}
+
+.auth-tabs button {
+  min-width: 84px;
+}
+
+.auth-card h2 {
+  margin-bottom: 8px;
+  font-size: 31px;
+}
+
+.auth-card > .muted {
+  margin-bottom: 30px;
+  font-size: 13px;
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.demo-hint {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+.demo-hint code {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: var(--bg-deep);
+  color: var(--ink-soft);
+}

@@ -4,12 +4,12 @@ import { toasts } from "@/stores/toast";
 </script>
 
 <template>
-  <div class="toast-stack" aria-live="polite">
+  <div class="toast-stack ui-stack" aria-live="polite">
     <TransitionGroup name="toast">
       <div
         v-for="toast in toasts"
         :key="toast.id"
-        class="toast"
+        class="toast ui-row ui-panel"
         :class="`toast-${toast.type}`"
       >
         <CheckCircle2 v-if="toast.type === 'success'" :size="18" />

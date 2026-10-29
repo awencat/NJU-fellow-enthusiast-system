@@ -5,7 +5,7 @@ withDefaults(defineProps<{ text?: string }>(), { text: "正在整理校园里的
 </script>
 
 <template>
-  <div class="loading-block">
+  <div class="loading-block ui-row">
     <LoaderCircle class="spin" :size="25" />
     <span>{{ text }}</span>
   </div>

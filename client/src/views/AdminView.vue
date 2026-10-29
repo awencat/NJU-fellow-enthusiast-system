@@ -234,17 +234,17 @@ onMounted(init);
 
 <template>
   <div class="admin-page page-shell wide-shell">
-    <header class="admin-heading">
+    <header class="admin-heading ui-heading-row">
       <div>
-        <span class="eyebrow"><ShieldCheck :size="14" /> 管理后台</span>
+        <span class="eyebrow ui-inline"><ShieldCheck :size="14" /> 管理后台</span>
         <h1>社区秩序，由每一次认真判断守护</h1>
         <p>审核举报、管理内容与账号，保持校园交流空间安全友善。</p>
       </div>
       <div class="admin-publish-actions">
-        <RouterLink class="button secondary button-small" to="/exchange/new?kind=news">
+        <RouterLink class="button secondary button-small ui-inline" to="/exchange/new?kind=news">
           <Plus :size="15" /> 发布新闻
         </RouterLink>
-        <RouterLink class="button button-small" to="/exchange/new">
+        <RouterLink class="button button-small ui-inline" to="/exchange/new">
           <FileText :size="15" /> 发布分享
         </RouterLink>
       </div>
@@ -279,8 +279,8 @@ onMounted(init);
       </button>
     </div>
 
-    <section class="admin-panel">
-      <div v-if="tab === 'reports'" class="admin-panel-head">
+    <section class="admin-panel ui-panel">
+      <div v-if="tab === 'reports'" class="admin-panel-head ui-between">
         <div class="segmented-tabs">
           <button
             v-for="item in [
@@ -297,21 +297,21 @@ onMounted(init);
         </div>
       </div>
 
-      <div v-else-if="tab === 'content'" class="admin-panel-head">
+      <div v-else-if="tab === 'content'" class="admin-panel-head ui-between">
         <div class="segmented-tabs">
           <button :class="{ active: contentTab === 'exchange' }" @click="contentTab = 'exchange'; loadTab()">交流内容</button>
           <button :class="{ active: contentTab === 'mate' }" @click="contentTab = 'mate'; loadTab()">搭子帖子</button>
         </div>
-        <form class="search-field compact" @submit.prevent="loadTab">
+        <form class="search-field compact ui-row ui-panel" @submit.prevent="loadTab">
           <Search :size="16" />
           <input v-model="search" type="search" placeholder="搜索标题或正文" />
           <button type="submit">搜索</button>
         </form>
       </div>
 
-      <div v-else class="admin-panel-head">
+      <div v-else class="admin-panel-head ui-between">
         <strong>用户账号</strong>
-        <form class="search-field compact" @submit.prevent="loadTab">
+        <form class="search-field compact ui-row ui-panel" @submit.prevent="loadTab">
           <Search :size="16" />
           <input v-model="search" type="search" placeholder="搜索昵称或账号" />
           <button type="submit">搜索</button>
@@ -320,18 +320,18 @@ onMounted(init);
 
       <LoadingBlock v-if="loading" />
 
-      <div v-else-if="tab === 'reports'" class="report-admin-list">
-        <article v-for="item in reports" :key="item.id" class="report-admin-card">
-          <div class="report-card-head">
+      <div v-else-if="tab === 'reports'" class="report-admin-list ui-stack">
+        <article v-for="item in reports" :key="item.id" class="report-admin-card ui-panel">
+          <div class="report-card-head ui-row">
             <span class="report-type">
               {{ item.targetType === "post" ? "交流帖" : item.targetType === "mate" ? "搭子帖" : item.targetType === "user" ? "用户" : "私信" }}
             </span>
-            <span class="status-pill" :class="item.status">
+            <span class="status-pill ui-inline" :class="item.status">
               {{ item.status === "pending" ? "待审核" : item.status === "resolved" ? "已处理" : "已驳回" }}
             </span>
             <span class="muted">#{{ item.id }} · {{ formatDateTime(item.createdAt) }}</span>
           </div>
-          <div class="report-reason">
+          <div class="report-reason ui-row">
             <Flag :size="17" />
             <strong>{{ item.reason }}</strong>
             <span>举报人：{{ item.reporter.nickname }}</span>
@@ -349,7 +349,7 @@ onMounted(init);
               <p>{{ message.content }}</p>
             </div>
           </div>
-          <div v-if="item.status === 'pending'" class="report-resolution">
+          <div v-if="item.status === 'pending'" class="report-resolution ui-wrap">
             <select v-model="actionChoices[item.id]">
               <option value="none">不处理内容，仅记录</option>
               <option v-if="item.targetType === 'post' || item.targetType === 'mate'" value="remove_content">下架内容</option>
@@ -358,10 +358,10 @@ onMounted(init);
               <option v-if="item.targetType !== 'message'" value="ban_user">封禁发布者/用户</option>
             </select>
             <input v-model="notes[item.id]" maxlength="1000" placeholder="处理备注（选填）" />
-            <button class="button button-small" :disabled="processing === item.id" @click="processReport(item, 'resolved')">
+            <button class="button button-small ui-inline" :disabled="processing === item.id" @click="processReport(item, 'resolved')">
               <CheckCircle2 :size="15" /> 确认处理
             </button>
-            <button class="button secondary button-small" :disabled="processing === item.id" @click="processReport(item, 'dismissed')">
+            <button class="button secondary button-small ui-inline" :disabled="processing === item.id" @click="processReport(item, 'dismissed')">
               驳回举报
             </button>
           </div>
@@ -377,11 +377,11 @@ onMounted(init);
         <article v-for="item in content" :key="item.id">
           <div>
             <strong>{{ item.title }}</strong>
-            <span>{{ item.content }}</span>
+            <span class="ui-ellipsis">{{ item.content }}</span>
             <small>{{ formatDateTime(item.createdAt) }}</small>
           </div>
           <div>{{ item.authorNickname }}<small>@{{ item.authorUsername }}</small></div>
-          <span class="status-pill" :class="item.status">{{ item.status === "published" ? "展示中" : "已下架" }}</span>
+          <span class="status-pill ui-inline" :class="item.status">{{ item.status === "published" ? "展示中" : "已下架" }}</span>
           <div class="table-actions">
             <button class="icon-button" :title="item.status === 'published' ? '下架' : '恢复'" @click="toggleContent(item)">
               <EyeOff v-if="item.status === 'published'" :size="17" />
@@ -400,15 +400,15 @@ onMounted(init);
           <span>用户</span><span>账号状态</span><span>发布内容</span><span>操作</span>
         </div>
         <article v-for="user in users" :key="user.id">
-          <div class="inline-user">
+          <div class="inline-user ui-row">
             <Avatar :user="user" :size="36" />
             <strong>{{ user.nickname }}<small>@{{ user.username }}</small></strong>
           </div>
-          <span class="status-pill" :class="user.status">{{ user.status === "active" ? "正常" : "已封禁" }}</span>
+          <span class="status-pill ui-inline" :class="user.status">{{ user.status === "active" ? "正常" : "已封禁" }}</span>
           <span>{{ user.postCount }} 篇</span>
           <div class="table-actions">
             <button
-              class="button button-small"
+              class="button button-small ui-inline"
               :class="{ secondary: user.status === 'banned' }"
               :disabled="processing === user.id"
               @click="toggleUser(user)"

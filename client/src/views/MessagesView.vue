@@ -196,7 +196,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="messages-page page-shell wide-shell">
     <header class="page-heading compact-heading">
-      <span class="eyebrow">私信</span>
+      <span class="eyebrow ui-inline">私信</span>
       <h1>把同行的约定，继续聊下去</h1>
     </header>
 
@@ -206,11 +206,11 @@ onBeforeUnmount(() => {
       title="还没有私信会话"
       text="申请搭子并通过后，聊天会出现在这里。"
     >
-      <RouterLink class="button button-small" to="/mates">去找搭子</RouterLink>
+      <RouterLink class="button button-small ui-inline" to="/mates">去找搭子</RouterLink>
     </EmptyState>
-    <div v-else class="chat-shell" :class="{ 'chat-has-selection': selectedId }">
+    <div v-else class="chat-shell ui-panel" :class="{ 'chat-has-selection': selectedId }">
       <aside class="conversation-list">
-        <div class="conversation-head">
+        <div class="conversation-head ui-between">
           <div>
             <strong>全部会话</strong>
             <span>{{ conversations.length }} 个</span>
@@ -230,8 +230,8 @@ onBeforeUnmount(() => {
               <strong>{{ conversation.otherUser.nickname }}</strong>
               <span>{{ relativeTime(conversation.lastMessageAt) }}</span>
             </div>
-            <p>{{ conversation.lastMessage }}</p>
-            <small>来自：{{ conversation.postTitle }}</small>
+            <p class="ui-ellipsis">{{ conversation.lastMessage }}</p>
+            <small class="ui-ellipsis">来自：{{ conversation.postTitle }}</small>
           </div>
           <span v-if="conversation.unreadCount" class="unread-badge">
             {{ conversation.unreadCount > 99 ? "99+" : conversation.unreadCount }}
@@ -239,20 +239,20 @@ onBeforeUnmount(() => {
         </button>
       </aside>
 
-      <section v-if="selected" class="chat-panel">
-        <header class="chat-header">
+      <section v-if="selected" class="chat-panel ui-stack">
+        <header class="chat-header ui-row">
           <button class="chat-back" @click="backToList"><ArrowLeft :size="20" /></button>
           <Avatar :user="selected.otherUser" :size="38" />
           <div>
             <strong>{{ selected.otherUser.nickname }}</strong>
-            <span>{{ selected.postTitle }}</span>
+            <span class="ui-ellipsis">{{ selected.postTitle }}</span>
           </div>
-          <span class="online-dot">实时消息</span>
+          <span class="online-dot ui-inline">实时消息</span>
         </header>
 
         <div ref="chatBody" class="chat-body">
           <LoadingBlock v-if="loadingMessages" text="正在加载消息…" />
-          <div v-else class="chat-intro">
+          <div v-else class="chat-intro ui-row">
             <MessageCircle :size="22" />
             <p>你们的申请已通过。友善沟通，尊重彼此的时间与边界。</p>
           </div>
@@ -269,7 +269,7 @@ onBeforeUnmount(() => {
             />
             <div class="message-bubble-wrap">
               <div class="message-bubble">{{ message.content }}</div>
-              <div class="message-time">
+              <div class="message-time ui-row">
                 <span>{{ formatDateTime(message.createdAt) }}</span>
                 <button
                   v-if="message.sender.id !== auth.state.user?.id"

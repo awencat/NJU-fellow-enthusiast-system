@@ -6,6 +6,12 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 }),
   routes: [
     {
+      path: "/faq",
+      name: "faq",
+      component: () => import("@/views/FaqView.vue"),
+      meta: { public: true },
+    },
+    {
       path: "/",
       name: "home",
       component: () => import("@/views/HomeView.vue"),
@@ -88,8 +94,8 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   await auth.loadMe();
-  // Every application page requires a session; only login/registration is public.
-  if (!to.meta.guestOnly && !auth.state.user) {
+  // Login/registration and explicitly public help pages are accessible without a session.
+  if (!to.meta.guestOnly && !to.meta.public && !auth.state.user) {
     return { name: "login", query: { redirect: to.fullPath } };
   }
   if (to.meta.requiresAdmin && !auth.isAdmin.value) {

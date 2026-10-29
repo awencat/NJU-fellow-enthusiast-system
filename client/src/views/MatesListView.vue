@@ -84,27 +84,27 @@ onMounted(load);
 
 <template>
   <div class="page-shell mates-page">
-    <header class="page-heading split-heading mates-heading">
+    <header class="page-heading split-heading mates-heading ui-heading-row">
       <div>
-        <span class="eyebrow"><Users :size="14" /> 搭子广场</span>
+        <span class="eyebrow ui-inline"><Users :size="14" /> 搭子广场</span>
         <h1>想做的事，<em>一起去做吧。</em></h1>
         <p>找到时间合拍、兴趣相近的同学。提交申请，经过发布者同意后即可私聊。</p>
       </div>
       <RouterLink
-        class="button warm-button"
+        class="button warm-button ui-inline"
         :to="auth.state.user ? '/mates/new' : '/login?redirect=/mates/new'"
       >
         <Plus :size="18" /> 发布搭子邀请
       </RouterLink>
     </header>
 
-    <section class="mate-search-panel">
-      <form class="search-field large" @submit.prevent="applySearch">
+    <section class="mate-search-panel ui-panel">
+      <form class="search-field large ui-row ui-panel" @submit.prevent="applySearch">
         <Search :size="20" />
         <input v-model="q" type="search" placeholder="搜索兴趣、活动或地点" />
         <button type="submit">搜索</button>
       </form>
-      <div class="popular-tags">
+      <div class="popular-tags ui-wrap">
         <button :class="{ active: !activeTag }" @click="updateTags('')">全部</button>
         <button
           v-for="item in popularTags"
@@ -117,7 +117,7 @@ onMounted(load);
       </div>
     </section>
 
-    <div class="list-summary">
+    <div class="list-summary ui-between">
       <strong>{{ total }} 个正在寻找同伴的邀请</strong>
       <span>请尊重彼此边界，线下见面优先选择公共场所</span>
     </div>
@@ -132,7 +132,7 @@ onMounted(load);
         title="暂时没有匹配的搭子"
         text="换个关键词，或者发布一个属于你的邀请。"
       >
-        <RouterLink class="button button-small" to="/mates/new">发布邀请</RouterLink>
+        <RouterLink class="button button-small ui-inline" to="/mates/new">发布邀请</RouterLink>
       </EmptyState>
       <PaginationBar
         :page="page"

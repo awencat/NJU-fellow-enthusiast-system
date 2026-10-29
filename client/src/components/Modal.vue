@@ -15,7 +15,7 @@ const emit = defineEmits<{
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="open" class="modal-backdrop" @click.self="emit('close')">
+      <div v-if="open" class="modal-backdrop ui-center" @click.self="emit('close')">
         <section
           class="modal-card"
           :style="{ maxWidth: width || '520px' }"
@@ -23,7 +23,7 @@ const emit = defineEmits<{
           aria-modal="true"
           :aria-label="title"
         >
-          <header class="modal-header">
+          <header class="modal-header ui-between">
             <h2>{{ title }}</h2>
             <button class="icon-button" aria-label="关闭" @click="emit('close')">
               <X :size="20" />

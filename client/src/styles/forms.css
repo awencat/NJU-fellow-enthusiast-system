@@ -1,0 +1,286 @@
+.stack-form {
+  gap: 20px;
+}
+
+.stack-form label,
+.tag-picker legend {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stack-form label > span,
+.tag-picker legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stack-form label small,
+.tag-picker legend small {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 400;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  outline: none;
+  background: var(--surface);
+  color: var(--ink);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input,
+select {
+  min-height: 44px;
+  padding: 9px 12px;
+}
+
+textarea {
+  padding: 12px;
+  line-height: 1.7;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(49, 95, 75, 0.09);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #a2aaa4;
+}
+
+.field-help {
+  align-self: flex-end;
+  color: var(--muted);
+  font-size: 10px !important;
+  font-weight: 400 !important;
+}
+
+.form-note {
+  margin: 0;
+  padding: 11px 13px;
+  border-radius: 10px;
+  background: var(--green-pale);
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.editor-page {
+  padding-top: 40px;
+}
+
+.editor-card {
+  padding: 32px;
+  box-shadow: var(--shadow-small);
+}
+
+.large-textarea {
+  min-height: 230px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 8px;
+}
+
+.image-uploader {
+  width: 100%;
+}
+
+.upload-placeholder {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 150px;
+  border: 1px dashed var(--line-dark);
+  border-radius: 14px;
+  background: var(--surface-muted);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.upload-placeholder:hover {
+  border-color: var(--green);
+  background: var(--green-pale);
+}
+
+.upload-placeholder span {
+  margin: 7px 0 1px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.upload-placeholder small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.image-preview {
+  position: relative;
+  width: min(100%, 460px);
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--bg-deep);
+}
+
+.image-preview img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.remove-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-round);
+  background: rgba(22, 31, 27, 0.74);
+  color: white;
+  cursor: pointer;
+}
+
+.tag-picker {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tag-picker legend {
+  margin-bottom: 10px;
+}
+
+.tag-options {
+  gap: 8px;
+}
+
+.tag-options button {
+  padding: 6px 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.tag-options button.selected {
+  border-color: var(--green);
+  background: var(--green-soft);
+  color: var(--green);
+  font-weight: 600;
+}
+
+.custom-tag {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.custom-tag input {
+  max-width: 210px;
+}
+
+.selected-tags {
+  gap: 7px;
+  min-height: 22px;
+  margin-top: 10px;
+}
+
+.selected-tags .tag button {
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hero-search,
+.search-field {
+  gap: 10px;
+  padding: 6px 7px 6px 16px;
+  border-radius: 15px;
+  box-shadow: var(--shadow-small);
+}
+
+.hero-search {
+  max-width: 650px;
+  min-height: 58px;
+  border-color: transparent;
+}
+
+.hero-search svg,
+.search-field svg {
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+
+.hero-search input,
+.search-field input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+}
+
+.hero-search button,
+.search-field button {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 19px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--green);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-field.compact {
+  width: min(360px, 100%);
+  min-height: 44px;
+  padding: 4px 5px 4px 13px;
+  box-shadow: none;
+}
+
+.search-field.compact button {
+  min-height: 34px;
+  padding: 0 14px;
+  font-size: 12px;
+}
+
+.search-field.large {
+  max-width: 760px;
+  min-height: 56px;
+  margin: 0 auto;
+}

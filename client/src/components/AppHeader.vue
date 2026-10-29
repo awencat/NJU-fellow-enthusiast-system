@@ -40,18 +40,18 @@ async function logout() {
 
 <template>
   <header class="site-header">
-    <div class="header-inner">
-      <RouterLink class="brand" to="/" @click="mobileOpen = false">
-        <span class="brand-mark">
+    <div class="header-inner ui-row">
+      <RouterLink class="brand ui-row" to="/" @click="mobileOpen = false">
+        <span class="brand-mark ui-center">
           <span></span><span></span>
         </span>
-        <span class="brand-copy">
+        <span class="brand-copy ui-stack">
           <strong>搭个伴</strong>
           <small>校园同好社区</small>
         </span>
       </RouterLink>
 
-      <nav class="desktop-nav">
+      <nav class="desktop-nav ui-row">
         <RouterLink
           v-for="item in nav"
           :key="item.to"
@@ -62,7 +62,7 @@ async function logout() {
         </RouterLink>
       </nav>
 
-      <div class="header-actions">
+      <div class="header-actions ui-row">
         <template v-if="auth.state.user">
           <RouterLink
             v-if="auth.state.user.role === 'admin'"
@@ -72,7 +72,7 @@ async function logout() {
           >
             <Settings :size="19" />
           </RouterLink>
-          <RouterLink class="user-chip" to="/profile">
+          <RouterLink class="user-chip ui-row ui-panel" to="/profile">
             <Avatar :user="auth.state.user" :size="32" />
             <span>{{ auth.state.user.nickname }}</span>
           </RouterLink>
@@ -81,8 +81,8 @@ async function logout() {
           </button>
         </template>
         <template v-else>
-          <RouterLink class="text-link" to="/login">登录</RouterLink>
-          <RouterLink class="button button-small" to="/login?tab=register">
+          <RouterLink class="text-link ui-inline" to="/login">登录</RouterLink>
+          <RouterLink class="button button-small ui-inline" to="/login?tab=register">
             加入校园
           </RouterLink>
         </template>

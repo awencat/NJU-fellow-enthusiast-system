@@ -31,7 +31,7 @@ async function onFile(event: Event) {
       <img :src="modelValue" alt="已上传的图片预览" />
       <button
         type="button"
-        class="remove-image"
+        class="remove-image ui-center"
         aria-label="移除图片"
         @click="emit('update:modelValue', null)"
       >
@@ -41,7 +41,7 @@ async function onFile(event: Event) {
     <button
       v-else
       type="button"
-      class="upload-placeholder"
+      class="upload-placeholder ui-stack"
       :disabled="uploading"
       @click="fileInput?.click()"
     >

@@ -76,16 +76,16 @@ onMounted(load);
 
 <template>
   <div class="editor-page page-shell narrow">
-    <button class="back-link" @click="router.back()">
+    <button class="back-link ui-inline" @click="router.back()">
       <ArrowLeft :size="17" /> 返回
     </button>
     <LoadingBlock v-if="loading" />
     <template v-else>
       <header class="page-heading compact-heading">
-        <span class="eyebrow">{{ editId ? "编辑内容" : "分享此刻" }}</span>
+        <span class="eyebrow ui-inline">{{ editId ? "编辑内容" : "分享此刻" }}</span>
         <h1>{{ editId ? "让这段文字更接近你想表达的" : "把值得分享的事写下来" }}</h1>
       </header>
-      <form class="editor-card stack-form" @submit.prevent="submit">
+      <form class="editor-card stack-form ui-panel ui-stack" @submit.prevent="submit">
         <label v-if="auth.state.user?.role === 'admin'">
           <span>内容类型</span>
           <select v-model="form.kind">
@@ -116,10 +116,10 @@ onMounted(load);
         </label>
         <ImageUpload v-model="form.imageUrl" />
         <div class="form-actions">
-          <button type="button" class="button secondary" @click="router.back()">
+          <button type="button" class="button secondary ui-inline" @click="router.back()">
             取消
           </button>
-          <button class="button" :disabled="submitting">
+          <button class="button ui-inline" :disabled="submitting">
             <Save :size="17" />
             {{ submitting ? "正在保存…" : editId ? "保存修改" : "发布分享" }}
           </button>

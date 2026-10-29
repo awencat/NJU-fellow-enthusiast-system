@@ -1,0 +1,75 @@
+/* 横排，两端对齐 */
+.ui-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 标题与操作区底部对齐 */
+.ui-heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+/* 纵向排列 */
+.ui-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 可换行的标签或操作区 */
+.ui-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* 横排，垂直居中 */
+.ui-row {
+  display: flex;
+  align-items: center;
+}
+
+/* 行内图标与文字 */
+.ui-inline {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 图标居中 */
+.ui-center {
+  display: grid;
+  place-items: center;
+}
+
+/* 标准面板：边框、底色与圆角 */
+.ui-panel {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+
+/* 三行摘要 */
+.ui-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* 卡片交互；单张卡片可通过 --card-lift 调整悬浮高度。 */
+.ui-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ui-card:hover {
+  transform: translateY(var(--card-lift, -3px));
+  box-shadow: var(--shadow-small);
+}
+
+/* 会话标题、摘要、后台内容统一使用单行省略。 */
+.ui-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

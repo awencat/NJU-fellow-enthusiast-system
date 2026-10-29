@@ -130,12 +130,12 @@ async function submit() {
 
 <template>
   <div class="auth-page">
-    <section class="auth-story">
+    <section class="auth-story ui-row">
       <div class="auth-story-inner">
-        <span class="hero-kicker"><Leaf :size="15" /> 搭个伴 · 校园同好社区</span>
+        <span class="hero-kicker ui-inline"><Leaf :size="15" /> 搭个伴 · 校园同好社区</span>
         <h1>让每一个<br />“要不要一起？”<br /><em>都有回应。</em></h1>
         <p>同好交流、兴趣搭子、安全的私聊空间。从一个真诚的邀请开始。</p>
-        <div class="auth-points">
+        <div class="auth-points ui-wrap">
           <span><Users :size="18" /> 申请通过后开启私聊</span>
           <span><ShieldCheck :size="18" /> 举报与社区管理机制</span>
         </div>
@@ -145,7 +145,7 @@ async function submit() {
       </div>
     </section>
 
-    <section class="auth-form-wrap">
+    <section class="auth-form-wrap ui-center">
       <div class="auth-card">
         <div class="segmented-tabs auth-tabs">
           <button :class="{ active: tab === 'login' }" @click="switchTab('login')">登录</button>
@@ -155,7 +155,7 @@ async function submit() {
         <p class="muted">
           {{ tab === "login" ? "输入账号密码，继续上次的对话。" : "创建账号即可分享和寻找搭子。" }}
         </p>
-        <form class="stack-form" @submit.prevent="submit">
+        <form class="stack-form ui-stack" @submit.prevent="submit">
           <label v-if="tab === 'register'">
             <span>昵称</span>
             <input v-model="form.nickname" maxlength="30" required placeholder="大家怎么称呼你？" />
@@ -197,7 +197,7 @@ async function submit() {
                 :placeholder="registrationConfig ? `请输入 @${registrationConfig.emailDomain} 邮箱` : '请输入校园邮箱'"
                 aria-describedby="email-domain-hint"
               />
-              <button class="button secondary email-code-button" type="button" :disabled="!canSendCode" @click="sendCode">
+              <button class="button secondary email-code-button ui-inline" type="button" :disabled="!canSendCode" @click="sendCode">
                 {{ emailSending ? "发送中…" : resendSeconds > 0 ? `${resendSeconds}秒后重发` : "发送验证码" }}
               </button>
             </div>
@@ -242,7 +242,7 @@ async function submit() {
               两次输入的密码不一致
             </small>
           </label>
-          <button class="button auth-submit" :disabled="submitting || emailSending">
+          <button class="button auth-submit ui-inline" :disabled="submitting || emailSending">
             {{ submitting ? "请稍候…" : tab === "login" ? "登录" : "创建账号" }}
             <ArrowRight :size="18" />
           </button>

@@ -101,28 +101,28 @@ onMounted(load);
 
 <template>
   <div class="profile-page page-shell">
-    <section v-if="auth.state.user" class="profile-hero">
-      <div class="profile-identity">
+    <section v-if="auth.state.user" class="profile-hero ui-between">
+      <div class="profile-identity ui-row">
         <Avatar :user="auth.state.user" :size="82" />
         <div>
-          <span class="eyebrow">{{ auth.state.user.role === "admin" ? "社区管理员" : "校园同好" }}</span>
+          <span class="eyebrow ui-inline">{{ auth.state.user.role === "admin" ? "社区管理员" : "校园同好" }}</span>
           <h1>{{ auth.state.user.nickname }}</h1>
           <p>@{{ auth.state.user.username }} · {{ auth.state.user.bio || "还没有填写个人简介" }}</p>
         </div>
       </div>
-      <div class="profile-actions">
-        <RouterLink v-if="auth.state.user.role === 'admin'" class="button secondary button-small" to="/admin">
+      <div class="profile-actions ui-wrap">
+        <RouterLink v-if="auth.state.user.role === 'admin'" class="button secondary button-small ui-inline" to="/admin">
           <Settings :size="15" /> 管理后台
         </RouterLink>
-        <button class="button secondary button-small" @click="editing = !editing">
+        <button class="button secondary button-small ui-inline" @click="editing = !editing">
           {{ editing ? "收起编辑" : "编辑资料" }}
         </button>
         <button class="icon-button" title="退出登录" @click="logout"><LogOut :size="18" /></button>
       </div>
     </section>
 
-    <form v-if="editing && auth.state.user" class="profile-edit-card stack-form" @submit.prevent="saveProfile">
-      <div class="profile-edit-heading">
+    <form v-if="editing && auth.state.user" class="profile-edit-card stack-form ui-panel ui-stack" @submit.prevent="saveProfile">
+      <div class="profile-edit-heading ui-between">
         <div><strong>编辑个人信息</strong><span>让你的校园名片更完整</span></div>
         <ImageUpload v-model="profileForm.avatar" />
       </div>
@@ -134,12 +134,12 @@ onMounted(load);
         <span>个人简介</span>
         <textarea v-model="profileForm.bio" rows="3" maxlength="200" placeholder="介绍一下你的兴趣或最近在做的事" />
       </label>
-      <button class="button button-small" :disabled="saving">
+      <button class="button button-small ui-inline" :disabled="saving">
         <Save :size="15" /> {{ saving ? "保存中…" : "保存资料" }}
       </button>
     </form>
 
-    <div class="profile-stat-row">
+    <div class="profile-stat-row ui-panel">
       <div><strong>{{ posts.length }}</strong><span>交流内容</span></div>
       <div><strong>{{ mates.length }}</strong><span>搭子邀请</span></div>
       <div><strong>{{ sentApplications.length }}</strong><span>发出的申请</span></div>
@@ -165,7 +165,7 @@ onMounted(load);
           <PostCard v-for="post in posts" :key="post.id" :post="post" />
         </div>
         <EmptyState v-else title="你还没有发布分享" text="记录一个校园片段，也许会遇见想法相近的人。">
-          <RouterLink class="button button-small" to="/exchange/new">写一篇分享</RouterLink>
+          <RouterLink class="button button-small ui-inline" to="/exchange/new">写一篇分享</RouterLink>
         </EmptyState>
       </template>
 
@@ -174,14 +174,14 @@ onMounted(load);
           <MateCard v-for="mate in mates" :key="mate.id" :mate="mate" />
         </div>
         <EmptyState v-else title="你还没有发布搭子邀请" text="把想做的事写下来，邀请同学一起。">
-          <RouterLink class="button button-small" to="/mates/new">发布搭子邀请</RouterLink>
+          <RouterLink class="button button-small ui-inline" to="/mates/new">发布搭子邀请</RouterLink>
         </EmptyState>
       </template>
 
       <template v-if="activeTab === 'applications'">
-        <div v-if="allApplications.length" class="application-summary-list">
+        <div v-if="allApplications.length" class="application-summary-list ui-stack">
           <article v-for="application in allApplications" :key="application.id">
-            <div class="application-summary-icon">
+            <div class="application-summary-icon ui-center">
               <CalendarDays :size="19" />
             </div>
             <div>
@@ -193,13 +193,13 @@ onMounted(load);
                     : `由你向 ${application.ownerNickname} 发出`
                 }}
               </p>
-              <span class="status-pill" :class="application.status">
+              <span class="status-pill ui-inline" :class="application.status">
                 {{ application.status === "pending" ? "等待回应" : application.status === "accepted" ? "已通过" : "未通过" }}
               </span>
             </div>
             <RouterLink
               v-if="application.conversationId"
-              class="text-link"
+              class="text-link ui-inline"
               :to="`/messages?c=${application.conversationId}`"
             >
               私信 <ChevronRight :size="15" />

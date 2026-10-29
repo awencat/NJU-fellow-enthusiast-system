@@ -48,7 +48,7 @@ onMounted(loadHome);
   <div class="home-page">
     <section class="hero">
       <div class="hero-copy">
-        <span class="hero-kicker">
+        <span class="hero-kicker ui-inline">
           <Sparkles :size="15" />
           校园里的兴趣，在这里遇见回应
         </span>
@@ -56,7 +56,7 @@ onMounted(loadHome);
         <p>
           分享校园里的新鲜与热爱，也找到愿意同路的人。一次散步、一场球，或是一段长期陪伴，都可以从一句“搭个伴”开始。
         </p>
-        <form class="hero-search" @submit.prevent="searchMates">
+        <form class="hero-search ui-row ui-panel" @submit.prevent="searchMates">
           <Search :size="19" />
           <input
             v-model="search"
@@ -66,7 +66,7 @@ onMounted(loadHome);
           />
           <button type="submit">开始寻找</button>
         </form>
-        <div class="hero-quick-links">
+        <div class="hero-quick-links ui-wrap">
           <span>大家都在找</span>
           <button @click="router.push('/mates?tag=周末')">周末出行</button>
           <button @click="router.push('/mates?tag=学习')">学习搭子</button>
@@ -79,7 +79,7 @@ onMounted(loadHome);
           <img src="/demo/autumn-walk.svg" alt="" />
           <span>一起去看秋天</span>
         </div>
-        <div class="hero-note">
+        <div class="hero-note ui-stack">
           <span class="hero-note-pin"></span>
           <strong>新朋友，从同好开始。</strong>
           <small>—— 校园同好站</small>
@@ -87,7 +87,7 @@ onMounted(loadHome);
         <div class="hero-photo hero-photo-small">
           <img src="/demo/badminton.svg" alt="" />
         </div>
-        <div class="hero-float-card">
+        <div class="hero-float-card ui-stack">
           <div><Users :size="16" /> 正在招募</div>
           <strong>周末去看展</strong>
           <span>2 位同学已申请</span>
@@ -118,12 +118,12 @@ onMounted(loadHome);
 
     <template v-else>
       <section class="section-block">
-        <div class="section-heading">
+        <div class="section-heading ui-heading-row">
           <div>
-            <span class="eyebrow">同好正在发生</span>
+            <span class="eyebrow ui-inline">同好正在发生</span>
             <h2>校园里，值得停一停的分享</h2>
           </div>
-          <RouterLink class="text-link arrow-link" to="/exchange">
+          <RouterLink class="text-link arrow-link ui-inline" to="/exchange">
             查看全部 <ArrowRight :size="17" />
           </RouterLink>
         </div>
@@ -140,19 +140,19 @@ onMounted(loadHome);
 
       <section class="mate-callout">
         <div class="mate-callout-copy">
-          <span class="eyebrow"><MessageCircleHeart :size="14" /> 找人一起</span>
+          <span class="eyebrow ui-inline"><MessageCircleHeart :size="14" /> 找人一起</span>
           <h2>不必等所有条件都刚刚好，<br />先发出邀请吧。</h2>
           <p>
             发布你的时间、地点和期待。感兴趣的同学会提交申请，你同意后再开始私聊。
           </p>
           <RouterLink
-            class="button"
+            class="button ui-inline"
             :to="auth.state.user ? '/mates/new' : '/login?redirect=/mates/new'"
           >
             发布一个搭子邀请 <ArrowRight :size="17" />
           </RouterLink>
         </div>
-        <div class="mate-callout-list">
+        <div class="mate-callout-list ui-stack">
           <article>
             <CalendarDays :size="20" />
             <div><strong>说清楚时间</strong><span>让彼此更好安排</span></div>
@@ -169,12 +169,12 @@ onMounted(loadHome);
       </section>
 
       <section class="section-block">
-        <div class="section-heading">
+        <div class="section-heading ui-heading-row">
           <div>
-            <span class="eyebrow">等待同行的人</span>
+            <span class="eyebrow ui-inline">等待同行的人</span>
             <h2>最近发布的搭子邀请</h2>
           </div>
-          <RouterLink class="text-link arrow-link" to="/mates">
+          <RouterLink class="text-link arrow-link ui-inline" to="/mates">
             全部搭子 <ArrowRight :size="17" />
           </RouterLink>
         </div>

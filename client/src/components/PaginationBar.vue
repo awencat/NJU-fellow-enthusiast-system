@@ -12,7 +12,7 @@ const pages = () => Math.max(1, Math.ceil(props.total / props.pageSize));
 </script>
 
 <template>
-  <div v-if="pages() > 1" class="pagination">
+  <div v-if="pages() > 1" class="pagination ui-row">
     <button
       class="icon-button"
       :disabled="page <= 1"

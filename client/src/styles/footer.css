@@ -1,0 +1,145 @@
+.site-footer {
+  padding: 26px 0 10px;
+  border-top: 1px solid var(--line);
+  color: #dbe7dc;
+  font-size: 16px;
+  background-color: #1e3428;
+}
+
+.footer-inner {
+  width: min(1480px, calc(100% - 48px));
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 100px;
+  margin-right: 0px;
+  align-items: center;
+  display: flex;
+}
+
+.footer-brand {
+  gap: 9px;
+}
+
+.footer-brand .brand-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+}
+
+.footer-brand .brand-mark span {
+  width: 11px;
+  height: 15px;
+}
+
+.footer-brand-name {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 15px;
+  letter-spacing: 0.08em;
+}
+
+.footer-tagline {
+  margin: 6px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.footer-about{
+  justify-content: left;
+  gap: 6px 20px;
+  margin: 0;
+  align-items: center;
+  box-sizing: content-box;
+}
+.footer-main-about{
+  display: grid;
+  gap: 8px 40px;
+  width: min(720px, 100%);
+  margin: 15px auto 0;
+  text-align: left;
+}
+.footer-main {
+  display: grid;
+  gap: 8px 40px;
+  width: min(720px, 100%);
+  margin: 15px auto 0;
+  text-align: end;
+}
+
+.footer-col {
+  min-width: 0;
+}
+
+.footer-heading {
+  justify-content: center;
+  gap: 6px;
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.footer-heading::before,
+.footer-heading::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-round);
+  background: var(--warm);
+}
+
+.footer-links {
+  justify-content: end;
+  gap: 6px 20px;
+  margin: 0;
+  align-items: end;;
+  box-sizing: content-box;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid #dbe7dc;
+  background: none;
+  color: #dbe7dc;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footer-links a:hover {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bottom-nav {
+  display: none;
+}
+.for_routerlink{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid #dbe7dc;
+  background: none;
+  color: #dbe7dc;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.footer-thanks{
+  text-align: left;
+  margin-top: 25px;
+  margin-left: 85px;
+  font-size: 12px;
+  color: #dbe7dc;
+  border-top: 1px solid #ffffff1a;
+  padding-top: 20px;
+}
+.text-thanks{
+  color: #dbe7dcaa;
+  font-size: 12px;
+}

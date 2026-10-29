@@ -154,16 +154,16 @@ onMounted(load);
   <div class="detail-page page-shell">
     <LoadingBlock v-if="loading" />
     <template v-else-if="post">
-      <button class="back-link" @click="router.back()"><ArrowLeft :size="17" /> 返回</button>
-      <article class="exchange-article">
+      <button class="back-link ui-inline" @click="router.back()"><ArrowLeft :size="17" /> 返回</button>
+      <article class="exchange-article ui-panel">
         <header class="article-header">
-          <div class="article-meta">
-            <span class="eyebrow">{{ post.kind === "news" ? "校园新闻" : "同好分享" }}</span>
+          <div class="article-meta ui-row">
+            <span class="eyebrow ui-inline">{{ post.kind === "news" ? "校园新闻" : "同好分享" }}</span>
             <span>{{ formatDateTime(post.createdAt) }}</span>
-            <span v-if="post.status === 'removed'" class="status-pill removed">已下架</span>
+            <span v-if="post.status === 'removed'" class="status-pill removed ui-inline">已下架</span>
           </div>
           <h1>{{ post.title }}</h1>
-          <div class="article-author">
+          <div class="article-author ui-row">
             <Avatar :user="post.author" :size="44" />
             <div>
               <strong>{{ post.author.nickname }}</strong>
@@ -175,7 +175,7 @@ onMounted(load);
         <img v-if="post.imageUrl" class="article-cover" :src="post.imageUrl" :alt="post.title" />
         <div class="article-content">{{ post.content }}</div>
 
-        <footer class="article-actions">
+        <footer class="article-actions ui-row">
           <button :class="{ active: post.liked }" @click="toggleLike">
             <Heart :size="19" :fill="post.liked ? 'currentColor' : 'none'" />
             {{ post.likeCount }} 喜欢
@@ -189,24 +189,24 @@ onMounted(load);
         </footer>
       </article>
 
-      <aside v-if="canManage" class="owner-actions">
+      <aside v-if="canManage" class="owner-actions ui-row">
         <span>作者管理</span>
-        <RouterLink class="button secondary button-small" :to="`/exchange/${post.id}/edit`">
+        <RouterLink class="button secondary button-small ui-inline" :to="`/exchange/${post.id}/edit`">
           <Pencil :size="15" /> 编辑
         </RouterLink>
-        <button class="button secondary danger-text button-small" @click="removePost">
+        <button class="button secondary danger-text button-small ui-inline" @click="removePost">
           <Trash2 :size="15" /> 删除
         </button>
       </aside>
 
       <section class="comments-section">
-        <div class="section-heading small-heading">
+        <div class="section-heading small-heading ui-heading-row">
           <div>
-            <span class="eyebrow">交流区</span>
+            <span class="eyebrow ui-inline">交流区</span>
             <h2><MessageCircle :size="20" /> {{ comments.length }} 条评论</h2>
           </div>
         </div>
-        <form v-if="auth.state.user" class="comment-composer" @submit.prevent="addComment">
+        <form v-if="auth.state.user" class="comment-composer ui-panel" @submit.prevent="addComment">
           <Avatar :user="auth.state.user" :size="36" />
           <textarea
             v-model="commentText"
@@ -214,7 +214,7 @@ onMounted(load);
             maxlength="500"
             placeholder="留下你的回应…"
           />
-          <button class="button button-small" :disabled="sendingComment || !commentText.trim()">
+          <button class="button button-small ui-inline" :disabled="sendingComment || !commentText.trim()">
             <Send :size="15" /> 发送
           </button>
         </form>
@@ -226,7 +226,7 @@ onMounted(load);
           <article v-for="comment in comments" :key="comment.id" class="comment-item">
             <Avatar :user="comment.author" :size="36" />
             <div>
-              <div class="comment-head">
+              <div class="comment-head ui-row">
                 <strong>{{ comment.author.nickname }}</strong>
                 <span>{{ formatDateTime(comment.createdAt) }}</span>
                 <button

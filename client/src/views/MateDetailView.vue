@@ -148,17 +148,17 @@ onMounted(load);
   <div class="mate-detail-page page-shell">
     <LoadingBlock v-if="loading" />
     <template v-else-if="mate">
-      <button class="back-link" @click="router.back()"><ArrowLeft :size="17" /> 返回搭子广场</button>
+      <button class="back-link ui-inline" @click="router.back()"><ArrowLeft :size="17" /> 返回搭子广场</button>
 
       <div class="mate-detail-layout">
-        <article class="mate-detail-main">
+        <article class="mate-detail-main ui-panel">
           <header>
-            <div class="tag-row">
-              <span v-for="tag in mate.tags" :key="tag" class="tag">{{ tag }}</span>
-              <span v-if="mate.status === 'removed'" class="status-pill removed">已下架</span>
+            <div class="tag-row ui-wrap">
+              <span v-for="tag in mate.tags" :key="tag" class="tag ui-inline">{{ tag }}</span>
+              <span v-if="mate.status === 'removed'" class="status-pill removed ui-inline">已下架</span>
             </div>
             <h1>{{ mate.title }}</h1>
-            <div class="mate-author-line">
+            <div class="mate-author-line ui-row">
               <Avatar :user="mate.author" :size="42" />
               <div>
                 <strong>{{ mate.author.nickname }}</strong>
@@ -170,7 +170,7 @@ onMounted(load);
           <img v-if="mate.imageUrl" class="mate-detail-cover" :src="mate.imageUrl" :alt="mate.title" />
 
           <div class="mate-detail-copy">
-            <span class="eyebrow">邀请详情</span>
+            <span class="eyebrow ui-inline">邀请详情</span>
             <p>{{ mate.details }}</p>
           </div>
 
@@ -207,89 +207,89 @@ onMounted(load);
           </section>
         </article>
 
-        <aside class="mate-apply-panel">
-          <span class="eyebrow">想一起吗？</span>
+        <aside class="mate-apply-panel ui-panel">
+          <span class="eyebrow ui-inline">想一起吗？</span>
           <h2>{{ mate.isOwner ? "管理你的搭子邀请" : "发出同行申请" }}</h2>
 
           <template v-if="mate.isOwner || auth.state.user?.role === 'admin'">
             <p>只有你同意后，申请人才会进入私聊并看到联系方式。</p>
-            <RouterLink class="button secondary full-button" :to="`/mates/${mate.id}/edit`">
+            <RouterLink class="button secondary full-button ui-inline" :to="`/mates/${mate.id}/edit`">
               <Pencil :size="16" /> 编辑邀请
             </RouterLink>
-            <button class="button secondary full-button danger-text" @click="removeMate">
+            <button class="button secondary full-button danger-text ui-inline" @click="removeMate">
               <Trash2 :size="16" /> 删除邀请
             </button>
           </template>
           <template v-else-if="mate.myApplicationStatus === 'accepted'">
-            <span class="status-callout success"><UserCheck :size="20" /> 申请已通过</span>
+            <span class="status-callout success ui-row"><UserCheck :size="20" /> 申请已通过</span>
             <p>你们已经可以私聊，也可以查看上方联系方式。</p>
             <RouterLink
               v-if="applications.length === 0"
-              class="button full-button"
+              class="button full-button ui-inline"
               to="/messages"
             >
               <MessageCircle :size="17" /> 前往私信
             </RouterLink>
           </template>
           <template v-else-if="mate.myApplicationStatus === 'pending'">
-            <span class="status-callout pending"><Clock3 :size="20" /> 等待发布者回应</span>
+            <span class="status-callout pending ui-row"><Clock3 :size="20" /> 等待发布者回应</span>
             <p>申请已经送达。对方同意后，你的私信页面会自动出现新会话。</p>
           </template>
           <template v-else-if="mate.myApplicationStatus === 'rejected'">
-            <span class="status-callout"><X :size="20" /> 这次未能同行</span>
+            <span class="status-callout ui-row"><X :size="20" /> 这次未能同行</span>
             <p>发布者没有接受这次申请，可以继续看看其他邀请。</p>
           </template>
           <template v-else>
             <p>用一小段话介绍自己，并说明为什么适合这次活动。发布者会收到你的申请。</p>
-            <button class="button full-button warm-button" @click="openApply">
+            <button class="button full-button warm-button ui-inline" @click="openApply">
               <Send :size="17" /> {{ canApply ? "申请同行" : "登录后申请" }}
             </button>
           </template>
-          <button class="text-button report-link" @click="openReport">
+          <button class="text-button report-link ui-inline" @click="openReport">
             <Flag :size="14" /> 举报这个邀请
           </button>
         </aside>
       </div>
 
       <section v-if="canManage" class="applications-section">
-        <div class="section-heading small-heading">
+        <div class="section-heading small-heading ui-heading-row">
           <div>
-            <span class="eyebrow">待处理</span>
+            <span class="eyebrow ui-inline">待处理</span>
             <h2>收到的申请</h2>
           </div>
           <span class="muted">{{ applications.filter((item) => item.status === "pending").length }} 条待回应</span>
         </div>
         <div v-if="applications.length" class="application-list">
-          <article v-for="application in applications" :key="application.id" class="application-card">
-            <div class="application-head">
+          <article v-for="application in applications" :key="application.id" class="application-card ui-panel">
+            <div class="application-head ui-row">
               <Avatar :user="application.applicant" :size="42" />
               <div>
                 <strong>{{ application.applicant.nickname }}</strong>
                 <span>@{{ application.applicant.username }}</span>
               </div>
-              <span class="status-pill" :class="application.status">
+              <span class="status-pill ui-inline" :class="application.status">
                 {{ application.status === "pending" ? "待处理" : application.status === "accepted" ? "已同意" : "已拒绝" }}
               </span>
             </div>
             <p>{{ application.message }}</p>
-            <div class="application-actions">
+            <div class="application-actions ui-wrap">
               <RouterLink
                 v-if="application.conversationId"
-                class="button button-small"
+                class="button button-small ui-inline"
                 :to="`/messages?c=${application.conversationId}`"
               >
                 <MessageCircle :size="15" /> 进入私聊
               </RouterLink>
               <template v-if="application.status === 'pending'">
                 <button
-                  class="button button-small"
+                  class="button button-small ui-inline"
                   :disabled="processingId === application.id"
                   @click="processApplication(application, 'accept')"
                 >
                   <Check :size="15" /> 同意
                 </button>
                 <button
-                  class="button secondary button-small"
+                  class="button secondary button-small ui-inline"
                   :disabled="processingId === application.id"
                   @click="processApplication(application, 'reject')"
                 >
@@ -303,7 +303,7 @@ onMounted(load);
       </section>
 
       <Modal :open="applyOpen" title="申请一起同行" @close="applyOpen = false">
-        <form class="stack-form" @submit.prevent="apply">
+        <form class="stack-form ui-stack" @submit.prevent="apply">
           <label>
             <span>给发布者的话</span>
             <textarea
@@ -315,7 +315,7 @@ onMounted(load);
             />
           </label>
           <p class="form-note">你的申请会直接发送给发布者。对方同意后，才会建立私聊会话。</p>
-          <button class="button warm-button" :disabled="submitting || !applicationMessage.trim()">
+          <button class="button warm-button ui-inline" :disabled="submitting || !applicationMessage.trim()">
             {{ submitting ? "正在发送…" : "发送申请" }}
           </button>
         </form>

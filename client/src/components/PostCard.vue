@@ -11,29 +11,29 @@ defineProps<{
 </script>
 
 <template>
-  <article class="post-card" :class="{ 'post-card-featured': featured }">
+  <article class="post-card ui-panel ui-card" :class="{ 'post-card-featured': featured }">
     <RouterLink :to="`/exchange/${post.id}`" class="post-card-link">
       <div v-if="post.imageUrl" class="post-cover">
         <img :src="post.imageUrl" :alt="post.title" loading="lazy" />
-        <span v-if="post.kind === 'news'" class="floating-badge">
+        <span v-if="post.kind === 'news'" class="floating-badge ui-inline">
           <Newspaper :size="13" /> 校园新闻
         </span>
       </div>
-      <div v-else class="post-cover post-cover-placeholder">
+      <div v-else class="post-cover post-cover-placeholder ui-stack">
         <span>“</span>
         <p>{{ post.kind === "news" ? "校园新鲜事" : "生活的小片段" }}</p>
       </div>
-      <div class="post-card-body">
-        <div class="post-kind-row">
-          <span class="eyebrow">
+      <div class="post-card-body ui-stack">
+        <div class="post-kind-row ui-between">
+          <span class="eyebrow ui-inline">
             {{ post.kind === "news" ? "校园新闻" : "同好分享" }}
           </span>
           <span>{{ relativeTime(post.createdAt) }}</span>
         </div>
         <h3>{{ post.title }}</h3>
-        <p>{{ post.content }}</p>
-        <div class="post-author-row">
-          <div class="inline-user">
+        <p class="ui-summary">{{ post.content }}</p>
+        <div class="post-author-row ui-between">
+          <div class="inline-user ui-row">
             <Avatar :user="post.author" :size="28" />
             <span>{{ post.author.nickname }}</span>
           </div>
