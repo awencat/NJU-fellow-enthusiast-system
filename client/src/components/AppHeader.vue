@@ -63,9 +63,7 @@ async function logout() {
   <header class="site-header" :class="`header-${pageMeta.key}`">
     <div class="header-inner ui-row">
       <RouterLink class="brand ui-row" to="/" @click="mobileOpen = false">
-        <span class="brand-mark ui-center">
-          <span></span><span></span>
-        </span>
+        <img class="brand-mark" src="/images/cat_tag3.png" alt="" width="38" height="38" />
         <span class="brand-copy ui-stack">
           <strong>搭个伴</strong>
           <small>校园同好社区</small>
