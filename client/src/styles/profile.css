@@ -126,3 +126,175 @@
   background: var(--green-pale);
   color: var(--green);
 }
+
+/* Profile navigation: editing is a first-level view instead of a collapse action. */
+.profile-page .profile-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px 26px 4px 26px;
+  border-left: 5px solid var(--green);
+  box-shadow: 10px 10px 0 rgba(223, 133, 72, 0.12), 0 16px 28px rgba(35, 52, 43, 0.08);
+}
+.profile-page .profile-hero::before {
+  position: absolute;
+  top: 16px;
+  right: 22px;
+  width: 118px;
+  height: 46px;
+  border-top: 2px solid rgba(223, 133, 72, 0.48);
+  border-bottom: 1px solid rgba(49, 95, 75, 0.35);
+  background: repeating-linear-gradient(125deg, transparent 0 10px, rgba(223, 133, 72, 0.1) 10px 11px, transparent 11px 20px);
+  content: "";
+  transform: rotate(-5deg) skewX(-20deg);
+  pointer-events: none;
+}
+.profile-page .profile-actions { position: relative; z-index: 1; }
+.profile-page .profile-stat-row {
+  border-radius: 3px 18px 3px 18px;
+  background: linear-gradient(100deg, rgba(255, 253, 248, 0.95), rgba(233, 238, 232, 0.82));
+  box-shadow: 5px 7px 0 rgba(49, 95, 75, 0.08);
+}
+.profile-page .profile-stat-row div:nth-child(odd) { background: rgba(223, 133, 72, 0.045); }
+.profile-page .profile-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  padding: 5px;
+  border: 1px solid rgba(49, 95, 75, 0.16);
+  border-radius: 4px 15px 4px 15px;
+  background: rgba(233, 238, 232, 0.56);
+}
+.profile-page .profile-tabs button {
+  min-height: 46px;
+  border: 0;
+  border-right: 1px solid rgba(49, 95, 75, 0.12);
+  border-radius: 2px 10px 2px 10px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.profile-page .profile-tabs button:last-child { border-right: 0; }
+.profile-page .profile-tabs button:hover,
+.profile-page .profile-tabs button.active {
+  background: var(--surface);
+  color: var(--green-dark);
+  box-shadow: 3px 3px 0 rgba(223, 133, 72, 0.22);
+}
+.profile-page .profile-tabs .profile-edit-tab { color: var(--warm-dark); }
+.profile-page .profile-edit-card {
+  margin-top: 0;
+  border-radius: 4px 22px 4px 22px;
+  border-top: 3px solid var(--warm);
+  box-shadow: 8px 10px 0 rgba(223, 133, 72, 0.1);
+}
+.profile-page .profile-edit-heading strong { font-family: var(--display-serif, var(--serif)); font-size: 23px; }
+.profile-page .profile-edit-heading span { margin-top: 5px; font-size: 12px; }
+
+.profile-section-heading {
+  position: relative;
+  margin-bottom: 28px;
+  padding: 27px 30px;
+  border: 1px solid rgba(49, 95, 75, .18);
+  border-left: 5px solid var(--warm);
+  border-radius: 3px 22px 3px 22px;
+  background: linear-gradient(110deg, rgba(247, 241, 231, .96), rgba(233, 238, 232, .72));
+  box-shadow: 8px 9px 0 rgba(49, 95, 75, .08);
+}
+.profile-section-heading::after {
+  position: absolute;
+  right: 24px;
+  bottom: 18px;
+  width: 74px;
+  height: 24px;
+  border-top: 2px solid rgba(223, 133, 72, .52);
+  border-bottom: 1px solid rgba(49, 95, 75, .36);
+  content: "";
+  transform: rotate(-5deg) skewX(-22deg);
+}
+.profile-section-heading h1 {
+  margin: 8px 0 7px;
+  color: var(--green-dark);
+  font-family: var(--display-serif, var(--serif));
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+}
+.profile-section-heading p { margin: 0; max-width: 480px; color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
+.profile-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.profile-back-link:hover { color: var(--green); }
+.profile-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 26px;
+}
+.profile-overview-card {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  gap: 5px 10px;
+  min-height: 144px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 4px 18px 4px 18px;
+  background: var(--surface);
+  box-shadow: 5px 7px 0 rgba(223, 133, 72, .08);
+}
+.profile-overview-card:nth-child(2) { transform: translateY(10px); box-shadow: 5px 7px 0 rgba(49, 95, 75, .1); }
+.profile-overview-card:nth-child(3) { box-shadow: 5px 7px 0 rgba(109, 79, 129, .1); }
+.profile-overview-card > svg { grid-row: span 2; color: var(--warm); }
+.profile-overview-card:nth-child(2) > svg { color: var(--green); }
+.profile-overview-card:nth-child(3) > svg { color: #80618d; }
+.profile-overview-card strong { font-family: var(--serif); font-size: 30px; line-height: 1; }
+.profile-overview-card span { color: var(--muted); font-size: 12px; }
+.profile-overview-card button {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 9px 0 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
+  color: var(--green);
+  font-size: 12px;
+  cursor: pointer;
+}
+.profile-overview-card button:hover { color: var(--warm-dark); }
+.application-filters {
+  display: flex;
+  gap: 6px;
+  margin: -9px 0 17px;
+}
+.application-filters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 3px 10px 3px 10px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 12px;
+  cursor: pointer;
+}
+.application-filters button span { color: var(--muted); font-size: 11px; }
+.application-filters button.active { border-color: rgba(49,95,75,.35); background: var(--green-pale); color: var(--green-dark); }
+
+@media (max-width: 720px) {
+  .profile-page .profile-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+  .profile-page .profile-tabs button { border-right: 0; }
+  .profile-section-heading { align-items: flex-start; flex-direction: column; gap: 16px; padding: 23px 19px; }
+  .profile-section-heading::after { right: 14px; bottom: 14px; }
+  .profile-overview-grid { grid-template-columns: 1fr; }
+  .profile-overview-card:nth-child(2) { transform: none; }
+  .application-filters { overflow-x: auto; margin-top: -2px; padding-bottom: 3px; }
+}

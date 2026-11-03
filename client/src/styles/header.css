@@ -59,11 +59,52 @@
   letter-spacing: 0.15em;
 }
 
+.header-context {
+  display: none;
+  min-width: 128px;
+  margin-left: 10px;
+  padding-left: 13px;
+  border-left: 2px solid var(--warm);
+  line-height: 1.15;
+}
+
+.header-context span {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.header-context strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--green-dark);
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .desktop-nav {
   justify-content: center;
   gap: 5px;
   flex: 1;
 }
+
+.header-exchange .header-context,
+.header-mates .header-context,
+.header-messages .header-context,
+.header-admin .header-context { display: block; }
+
+.header-exchange .header-context { border-left-color: var(--warm); }
+.header-mates .header-context { border-left-color: var(--green); }
+.header-messages .header-context { border-left-color: #8b6d9d; }
+.header-profile .header-context { border-left-color: #b97a45; }
+.header-profile-posts .header-context { border-left-color: var(--warm); }
+.header-profile-mates .header-context { border-left-color: var(--green); }
+.header-profile-applications .header-context { border-left-color: #80618d; }
+.header-profile-edit .header-context { border-left-color: #b97a45; }
+.header-admin .header-context { border-left-color: #6f7c80; }
 
 .desktop-nav a {
   position: relative;
@@ -125,6 +166,95 @@
   font-weight: 600;
 }
 
+.user-menu {
+  position: relative;
+}
+
+.user-menu-trigger {
+  border: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.86);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.user-menu-trigger:hover,
+.user-menu-trigger[aria-expanded="true"] {
+  border-color: rgba(49, 95, 75, .42);
+  background: var(--green-pale);
+  box-shadow: 4px 4px 0 rgba(223, 133, 72, .16);
+}
+
+.user-menu-trigger svg {
+  color: var(--muted);
+  transition: transform .2s ease;
+}
+
+.user-menu-trigger svg.rotated {
+  transform: rotate(180deg);
+}
+
+.user-menu-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 20;
+  display: grid;
+  min-width: 178px;
+  padding: 6px;
+  border: 1px solid rgba(49, 95, 75, .22);
+  border-radius: 4px 16px 4px 16px;
+  background: rgba(255, 253, 248, .98);
+  box-shadow: 8px 10px 0 rgba(223, 133, 72, .14), 0 14px 28px rgba(35, 52, 43, .14);
+}
+
+.user-menu-panel::before {
+  position: absolute;
+  top: -5px;
+  right: 24px;
+  width: 34px;
+  height: 8px;
+  border-top: 2px solid var(--warm);
+  content: "";
+  transform: rotate(-4deg) skewX(-24deg);
+}
+
+.user-menu-panel a,
+.user-menu-panel button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 3px 10px 3px 10px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.user-menu-panel a:hover,
+.user-menu-panel button:hover {
+  background: var(--green-pale);
+  color: var(--green-dark);
+}
+
+.user-menu-panel button:last-child {
+  margin-top: 5px;
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 3px 10px;
+  color: var(--warm-dark);
+}
+
+.header-messages .desktop-nav a.active {
+  background: #ebe4f0;
+  color: #644b73;
+}
+
 .logout-button {
   border-color: transparent;
   background: transparent;
@@ -152,4 +282,8 @@
 
 .arrow-link:hover {
   gap: 8px;
+}
+
+@media (max-width: 980px) {
+  .header-context { display: none !important; }
 }

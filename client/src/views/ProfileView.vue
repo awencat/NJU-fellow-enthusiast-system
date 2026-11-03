@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+import { computed, onMounted, reactive, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import {
+  ArrowLeft,
+  ArrowRight,
   CalendarDays,
   ChevronRight,
   FileText,
-  LogOut,
   MessageCircle,
   Save,
   Settings,
-  UserRound,
+  Users,
 } from "lucide-vue-next";
 import { api } from "@/api";
 import { auth } from "@/stores/auth";
@@ -33,11 +34,14 @@ type ApplicationSummary = {
   conversationId: number | null;
 };
 
+type ProfileTab = "overview" | "posts" | "mates" | "applications" | "edit";
+const route = useRoute();
 const router = useRouter();
-const activeTab = ref<"posts" | "mates" | "applications">("posts");
-const editing = ref(false);
+const validTabs: ProfileTab[] = ["overview", "posts", "mates", "applications", "edit"];
+const activeTab = ref<ProfileTab>(validTabs.includes(route.query.tab as ProfileTab) ? route.query.tab as ProfileTab : "overview");
 const loading = ref(true);
 const saving = ref(false);
+const applicationFilter = ref<"all" | "sent" | "received">("all");
 const posts = ref<ExchangePost[]>([]);
 const mates = ref<MatePost[]>([]);
 const sentApplications = ref<ApplicationSummary[]>([]);
@@ -52,6 +56,11 @@ const allApplications = computed(() =>
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   ),
 );
+const visibleApplications = computed(() => {
+  if (applicationFilter.value === "sent") return sentApplications.value;
+  if (applicationFilter.value === "received") return receivedApplications.value;
+  return allApplications.value;
+});
 
 async function load() {
   loading.value = true;
@@ -81,7 +90,7 @@ async function saveProfile() {
       body: JSON.stringify(profileForm),
     });
     if (data.user) auth.updateUser(data.user);
-    editing.value = false;
+    selectTab("overview");
     notify("个人信息已更新");
   } catch (error) {
     notify(error instanceof Error ? error.message : "保存失败", "error");
@@ -90,18 +99,29 @@ async function saveProfile() {
   }
 }
 
-async function logout() {
-  await auth.logout();
-  await router.replace({ name: "login" });
-  notify("已安全退出");
+function selectTab(tab: ProfileTab) {
+  activeTab.value = tab;
+  void router.push({ query: { ...route.query, tab: tab === "overview" ? undefined : tab } });
 }
+
+watch(() => route.query.tab, (tab) => {
+  activeTab.value = validTabs.includes(tab as ProfileTab) ? tab as ProfileTab : "overview";
+});
+
+const sectionMeta = computed(() => ({
+  overview: { eyebrow: "YOUR CAMPUS SPACE", title: "个人资料", description: "管理你的校园名片，查看在社区中的参与记录。", action: "" },
+  posts: { eyebrow: "YOUR STORIES", title: "我的分享", description: "你发布的校园动态与兴趣记录。", action: "写一篇分享" },
+  mates: { eyebrow: "YOUR PLANS", title: "我的搭子", description: "查看你发起的同行计划和活动邀请。", action: "发布搭子邀请" },
+  applications: { eyebrow: "REQUESTS", title: "申请记录", description: "跟进你发出的申请，以及收到的同行请求。", action: "查看私信" },
+  edit: { eyebrow: "PROFILE SETTINGS", title: "编辑资料", description: "更新头像、昵称和个人简介。", action: "" },
+}[activeTab.value]));
 
 onMounted(load);
 </script>
 
 <template>
   <div class="profile-page page-shell">
-    <section v-if="auth.state.user" class="profile-hero ui-between">
+    <section v-if="auth.state.user && activeTab === 'overview'" class="profile-hero ui-between">
       <div class="profile-identity ui-row">
         <Avatar :user="auth.state.user" :size="82" />
         <div>
@@ -114,48 +134,40 @@ onMounted(load);
         <RouterLink v-if="auth.state.user.role === 'admin'" class="button secondary button-small ui-inline" to="/admin">
           <Settings :size="15" /> 管理后台
         </RouterLink>
-        <button class="button secondary button-small ui-inline" @click="editing = !editing">
-          {{ editing ? "收起编辑" : "编辑资料" }}
-        </button>
-        <button class="icon-button" title="退出登录" @click="logout"><LogOut :size="18" /></button>
       </div>
     </section>
 
-    <form v-if="editing && auth.state.user" class="profile-edit-card stack-form ui-panel ui-stack" @submit.prevent="saveProfile">
-      <div class="profile-edit-heading ui-between">
-        <div><strong>编辑个人信息</strong><span>让你的校园名片更完整</span></div>
-        <ImageUpload v-model="profileForm.avatar" />
+    <header v-if="activeTab !== 'overview'" class="profile-section-heading ui-between">
+      <div>
+        <RouterLink class="profile-back-link" to="/profile"><ArrowLeft :size="15" /> 个人概览</RouterLink>
+        <span class="eyebrow">{{ sectionMeta.eyebrow }}</span>
+        <h1>{{ sectionMeta.title }}</h1>
+        <p>{{ sectionMeta.description }}</p>
       </div>
-      <label>
-        <span>昵称</span>
-        <input v-model="profileForm.nickname" maxlength="30" required />
-      </label>
-      <label>
-        <span>个人简介</span>
-        <textarea v-model="profileForm.bio" rows="3" maxlength="200" placeholder="介绍一下你的兴趣或最近在做的事" />
-      </label>
-      <button class="button button-small ui-inline" :disabled="saving">
-        <Save :size="15" /> {{ saving ? "保存中…" : "保存资料" }}
-      </button>
-    </form>
+      <RouterLink v-if="activeTab === 'posts'" class="button ui-inline" to="/exchange/new">
+        <FileText :size="16" /> {{ sectionMeta.action }}
+      </RouterLink>
+      <RouterLink v-else-if="activeTab === 'mates'" class="button warm-button ui-inline" to="/mates/new">
+        <Users :size="16" /> {{ sectionMeta.action }}
+      </RouterLink>
+      <RouterLink v-else-if="activeTab === 'applications'" class="button secondary ui-inline" to="/messages">
+        <MessageCircle :size="16" /> {{ sectionMeta.action }}
+      </RouterLink>
+    </header>
 
-    <div class="profile-stat-row ui-panel">
-      <div><strong>{{ posts.length }}</strong><span>交流内容</span></div>
-      <div><strong>{{ mates.length }}</strong><span>搭子邀请</span></div>
-      <div><strong>{{ sentApplications.length }}</strong><span>发出的申请</span></div>
-      <div><strong>{{ receivedApplications.length }}</strong><span>收到的申请</span></div>
-    </div>
-
-    <div class="profile-tabs segmented-tabs">
-      <button :class="{ active: activeTab === 'posts' }" @click="activeTab = 'posts'">
-        <FileText :size="16" /> 我的分享
-      </button>
-      <button :class="{ active: activeTab === 'mates' }" @click="activeTab = 'mates'">
-        <UserRound :size="16" /> 我的搭子
-      </button>
-      <button :class="{ active: activeTab === 'applications' }" @click="activeTab = 'applications'">
-        <MessageCircle :size="16" /> 申请记录
-      </button>
+    <div v-if="activeTab === 'overview' && !loading" class="profile-overview-grid">
+      <article class="profile-overview-card">
+        <FileText :size="20" /><strong>{{ posts.length }}</strong><span>篇分享</span>
+        <button type="button" @click="selectTab('posts')">查看我的分享 <ArrowRight :size="15" /></button>
+      </article>
+      <article class="profile-overview-card">
+        <Users :size="20" /><strong>{{ mates.length }}</strong><span>个搭子计划</span>
+        <button type="button" @click="selectTab('mates')">查看我的搭子 <ArrowRight :size="15" /></button>
+      </article>
+      <article class="profile-overview-card">
+        <MessageCircle :size="20" /><strong>{{ allApplications.length }}</strong><span>条申请记录</span>
+        <button type="button" @click="selectTab('applications')">查看申请记录 <ArrowRight :size="15" /></button>
+      </article>
     </div>
 
     <LoadingBlock v-if="loading" />
@@ -179,8 +191,13 @@ onMounted(load);
       </template>
 
       <template v-if="activeTab === 'applications'">
-        <div v-if="allApplications.length" class="application-summary-list ui-stack">
-          <article v-for="application in allApplications" :key="application.id">
+        <div class="application-filters" role="group" aria-label="筛选申请记录">
+          <button :class="{ active: applicationFilter === 'all' }" @click="applicationFilter = 'all'">全部 <span>{{ allApplications.length }}</span></button>
+          <button :class="{ active: applicationFilter === 'sent' }" @click="applicationFilter = 'sent'">我发出的 <span>{{ sentApplications.length }}</span></button>
+          <button :class="{ active: applicationFilter === 'received' }" @click="applicationFilter = 'received'">收到的 <span>{{ receivedApplications.length }}</span></button>
+        </div>
+        <div v-if="visibleApplications.length" class="application-summary-list ui-stack">
+          <article v-for="application in visibleApplications" :key="application.id">
             <div class="application-summary-icon ui-center">
               <CalendarDays :size="19" />
             </div>
@@ -206,8 +223,26 @@ onMounted(load);
             </RouterLink>
           </article>
         </div>
-        <EmptyState v-else title="还没有申请记录" text="找到感兴趣的搭子邀请，发出第一次同行申请。" />
+        <EmptyState v-else :title="applicationFilter === 'sent' ? '还没有发出申请' : applicationFilter === 'received' ? '还没有收到申请' : '还没有申请记录'" text="找到感兴趣的搭子邀请，提交同行申请后可在这里跟进进度。" />
       </template>
+
+      <form v-if="activeTab === 'edit' && auth.state.user" class="profile-edit-card stack-form ui-panel ui-stack" @submit.prevent="saveProfile">
+        <div class="profile-edit-heading ui-between">
+          <div><strong>编辑个人信息</strong><span>更新你的校园名片</span></div>
+          <ImageUpload v-model="profileForm.avatar" />
+        </div>
+        <label>
+          <span>昵称</span>
+          <input v-model="profileForm.nickname" maxlength="30" required />
+        </label>
+        <label>
+          <span>个人简介</span>
+          <textarea v-model="profileForm.bio" rows="3" maxlength="200" placeholder="介绍一下你的兴趣或最近在做的事" />
+        </label>
+        <button class="button button-small ui-inline" :disabled="saving">
+          <Save :size="15" /> {{ saving ? "保存中…" : "保存资料" }}
+        </button>
+      </form>
     </template>
   </div>
 </template>
