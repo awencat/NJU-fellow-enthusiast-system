@@ -1,119 +1,73 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { Plus, Search, Users } from "lucide-vue-next";
+import { Plus } from "lucide-vue-next";
 import { api } from "@/api";
 import { auth } from "@/stores/auth";
+import { notify } from "@/stores/toast";
+import TagInput from "@/components/TagInput.vue";
 import type { MatePost, Paginated } from "@/types";
 import MateCard from "@/components/MateCard.vue";
-import LoadingBlock from "@/components/LoadingBlock.vue";
 import EmptyState from "@/components/EmptyState.vue";
+import LoadingBlock from "@/components/LoadingBlock.vue";
 import PaginationBar from "@/components/PaginationBar.vue";
-
 const route = useRoute();
 const router = useRouter();
-const loading = ref(true);
 const mates = ref<MatePost[]>([]);
-const q = ref(String(route.query.q ?? ""));
-const tag = ref(String(route.query.tag ?? ""));
-const page = ref(Number(route.query.page) || 1);
+const loading = ref(true);
+const q = ref("");
+const tags = ref<string[]>([]);
+const page = ref(1);
 const total = ref(0);
 const pageSize = 9;
-const popularTags = ["周末", "运动", "学习", "摄影", "户外", "长期", "今晚"];
-const activeTag = computed(() => tag.value);
-
-async function load() {
-  loading.value = true;
-  try {
-    const params = new URLSearchParams({
-      page: String(page.value),
-      pageSize: String(pageSize),
-    });
-    if (q.value) params.set("q", q.value);
-    if (tag.value) params.set("tag", tag.value);
-    const data = await api<Paginated<MatePost>>(`/api/mates?${params}`);
-    mates.value = data.items;
-    total.value = data.total;
-  } finally {
-    loading.value = false;
-  }
-}
-
-function updateTags(nextTag: string) {
-  tag.value = nextTag;
-  page.value = 1;
-  router.replace({
-    query: {
-      ...(q.value ? { q: q.value } : {}),
-      ...(tag.value ? { tag: tag.value } : {}),
-    },
-  });
-  load();
-}
-
+let request = 0;
+watch(() => route.query, async query => {
+ q.value = String(query.q ?? "");
+ tags.value = (Array.isArray(query.tag) ? query.tag : query.tag ? [query.tag] : []).filter((t): t is string => typeof t === "string");
+ page.value = Math.max(1, Number(query.page) || 1);
+ const params = new URLSearchParams({ page: String(page.value), pageSize: String(pageSize) });
+ if(q.value) params.set("q", q.value);
+ tags.value.forEach(tag => params.append("tag",tag));
+ const current = ++request;
+ loading.value = true;
+ try {
+  const data = await api<Paginated<MatePost>>(`/api/mates?${params}`);
+  if(current === request) {mates.value = data.items; total.value = data.total;}
+ } catch(error) {
+  if(current === request) {mates.value = []; total.value = 0; notify(error instanceof Error ? error.message : "读取失败", "error");}
+ } finally {if(current === request) loading.value = false;}
+}, { immediate: true });
 function applySearch() {
-  page.value = 1;
-  router.replace({
-    query: {
-      ...(q.value ? { q: q.value } : {}),
-      ...(tag.value ? { tag: tag.value } : {}),
-    },
-  });
-  load();
+ router.replace({query: {...(q.value.trim() ? {q: q.value.trim()} : {}), ...(tags.value.length ? {tag: tags.value} : {})}});
 }
-
+function clearFilters() { q.value = ""; tags.value = []; applySearch(); }
 function changePage(value: number) {
-  page.value = value;
-  router.replace({ query: { ...route.query, page: value } });
-  load();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+ router.replace({query: {...route.query,page: value}});
+ window.scrollTo({top:0, behavior:"smooth"});
 }
-
-watch(
-  () => route.query,
-  (query) => {
-    q.value = String(query.q ?? "");
-    tag.value = String(query.tag ?? "");
-    page.value = Number(query.page) || 1;
-    load();
-  },
-);
-
-onMounted(load);
 </script>
 
 <template>
-  <div class="page-shell mates-page">
-    <header class="page-heading split-heading mates-heading ui-heading-row">
-      <div>
-        <h1>搭子广场</h1>
-      </div>
+  <div class="page-shell mates-page listing-page">
+
+
+    <form class="tag-search-panel" role="search" aria-label="筛选搭子" @submit.prevent="applySearch">
+      <div class="search-input-row">
+      <label class="search-keyword"><span>关键词</span><input v-model="q" type="search" placeholder="搜索标题或正文" /></label>
+      <TagInput v-model="tags" />
       <RouterLink
-        class="button warm-button ui-inline"
+        class="search-publish button warm-button ui-inline"
         :to="auth.state.user ? '/mates/new' : '/login?redirect=/mates/new'"
       >
         <Plus :size="18" /> 发布搭子邀请
       </RouterLink>
-    </header>
-
-    <section class="mate-search-panel ui-panel">
-      <form class="search-field large ui-row ui-panel" @submit.prevent="applySearch">
-        <Search :size="20" />
-        <input v-model="q" type="search" placeholder="搜索兴趣、活动或地点" />
-        <button type="submit">搜索</button>
-      </form>
-      <div class="popular-tags ui-wrap">
-        <button :class="{ active: !activeTag }" @click="updateTags('')">全部</button>
-        <button
-          v-for="item in popularTags"
-          :key="item"
-          :class="{ active: activeTag === item }"
-          @click="updateTags(item)"
-        >
-          {{ item }}
-        </button>
       </div>
-    </section>
+      <div class="search-actions">
+        <button type="submit" class="button">筛选</button>
+        <button type="button" class="button secondary" @click="clearFilters">清空</button>
+        <small>标签支持部分文字匹配，匹配标签越多越靠前。</small>
+      </div>
+    </form>
 
     <div class="list-summary ui-between">
       <strong>{{ total }} 个正在寻找同伴的邀请</strong>

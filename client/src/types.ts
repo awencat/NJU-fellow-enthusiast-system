@@ -32,7 +32,7 @@ export type Author = {
 
 export type ExchangePost = {
   id: number;
-  kind: "share" | "news";
+  tags: string[];
   title: string;
   content: string;
   imageUrl: string | null;

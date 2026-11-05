@@ -1,6 +1,6 @@
 /* 像素按钮。零模糊高光和阴影组成硬质倒角，统一所有操作按钮。
    页面只负责尺寸与布局；颜色在此通过变量切换。 */
-:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"], .mascot-note summary) {
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"]) {
   --key-face: #dedbd4;
   --key-hover: #eeeae2;
   --key-light: #fffdf7;
@@ -41,14 +41,14 @@
   text-shadow: 1px 1px 0 #4f202c;
 }
 
-:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"], .mascot-note summary):hover:not(:disabled):not([aria-disabled="true"]) {
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"]):hover:not(:disabled):not([aria-disabled="true"]) {
   background: var(--key-hover);
   color: var(--key-text);
   border-color: #382d38;
   box-shadow: inset 2px 2px 0 var(--key-light), inset -2px -3px 0 var(--key-shade), 0 3px 0 var(--key-base);
   transform: none;
 }
-:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"], .mascot-note summary):active:not(:disabled):not([aria-disabled="true"]) {
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"]):active:not(:disabled):not([aria-disabled="true"]) {
   transform: translateY(3px);
   box-shadow: inset 2px 2px 0 var(--key-shade), inset -2px -2px 0 var(--key-light);
 }
@@ -60,7 +60,7 @@
   --key-text: #382c32;
   text-shadow: 0 1px 0 var(--key-light);
 }
-:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"], .mascot-note summary):focus-visible {
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"]):focus-visible {
   outline: 3px solid #c18a22;
   outline-offset: 4px;
 }
@@ -87,4 +87,15 @@
 .app-main .profile-tabs, .app-main .segmented-tabs, .app-main .admin-tabs { gap: 6px; padding-bottom: 3px; }
 .site-header .user-menu-panel { gap: 6px; }
 .site-header .user-menu-trigger svg { color: inherit; }
+.site-header .header-actions .user-menu .user-menu-trigger {
+  --key-face: #fff;
+  --key-hover: #fff;
+  --key-light: #fff;
+  --key-shade: #ded1e2;
+  --key-base: #38203e;
+  --key-text: var(--campus-purple);
+  background: #fff;
+  color: var(--campus-purple);
+  text-shadow: none;
+}
 .app-main .application-filters button span { color: inherit; }

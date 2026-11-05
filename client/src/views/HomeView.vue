@@ -47,39 +47,22 @@ onMounted(loadHome);
   <div class="home-page">
     <header class="atlas-cover">
       <div class="atlas-cover-copy">
-        <span class="atlas-imprint">南大 · 社区图鉴</span>
-        <h1>校园同好<span>图鉴</span></h1>
-        <nav aria-label="本页导航"><a href="#field-posts">同好交流 ↓</a><a href="#field-mates">搭子招募 ↓</a></nav>
+        <span class="atlas-imprint">近朱者赤，近你者...?</span>
+        <h1>校园同好     <span>相约要约的好</span></h1>
       </div>
       <div class="atlas-cover-art" aria-hidden="true"><img :src="homeMascot" alt="" /></div>
     </header>
     <div class="folio-columns">
-      <aside class="folio-directory">
-        <h2>栏目目录</h2>
-        <nav aria-label="栏目目录">
-          <RouterLink to="/exchange"><img src="/images/atlas/journal.svg" alt="" />同好交流</RouterLink>
-          <RouterLink to="/mates"><img src="/images/atlas/compass.svg" alt="" />找搭子</RouterLink>
-          <RouterLink to="/messages"><img src="/images/atlas/mail.svg" alt="" />私信</RouterLink>
-        </nav>
-        <h2>按兴趣找搭子</h2>
-        <form class="folio-search" @submit.prevent="searchMates">
-          <input v-model="search" type="search" aria-label="搜索搭子" placeholder="搜索活动或地点" />
-          <button>搜索</button>
-        </form>
-        <div class="folio-tags">
-          <RouterLink v-for="tag in ['周末', '学习', '运动']" :key="tag" :to="{ path: '/mates', query: { tag } }">{{ tag }}</RouterLink>
-        </div>
-      </aside>
       <div class="folio-content">
         <LoadingBlock v-if="loading" />
         <p v-else-if="error" role="status">暂时无法读取社区动态。<button @click="loadHome">重新加载</button></p>
         <template v-else>
           <section id="field-posts" class="folio-section">
-            <header><h2><img src="/images/atlas/journal.svg" alt="" />同好交流</h2><RouterLink to="/exchange/new">写分享 ↗</RouterLink></header>
+            <header><h2><img src="/images/atlas/journal.svg" alt="" />同好交流</h2></header>
             <ul>
               <li v-for="(post, index) in posts" :key="post.id" :class="{ 'atlas-lead': index === 0 && post.imageUrl }">
                 <img v-if="index === 0 && post.imageUrl" class="atlas-lead-cover" :src="post.imageUrl" alt="" />
-                <small>{{ post.kind === 'news' ? '校园新闻' : '同好分享' }}</small>
+                <small>{{ post.tags[0] || '分享' }}</small>
                 <RouterLink :to="'/exchange/' + post.id">{{ post.title }}</RouterLink>
                 <span>{{ post.author.nickname }} · {{ relativeTime(post.createdAt) }}</span>
               </li>
@@ -88,7 +71,7 @@ onMounted(loadHome);
             <RouterLink class="folio-more" to="/exchange">全部交流 →</RouterLink>
           </section>
           <section id="field-mates" class="folio-section">
-            <header><h2><img src="/images/atlas/compass.svg" alt="" />搭子招募</h2><RouterLink to="/mates/new">发布邀请 ↗</RouterLink></header>
+            <header><h2><img src="/images/atlas/compass.svg" alt="" />搭子招募</h2></header>
             <ul>
               <li v-for="mate in mates" :key="mate.id">
                 <small>{{ mate.tags[0] || '招募' }}</small>
@@ -102,9 +85,5 @@ onMounted(loadHome);
         </template>
       </div>
     </div>
-    <details class="mascot-note">
-      <summary>🐾 校猫手记</summary>
-      <figure><img src="/images/campus-mascot.png" alt="身穿红袍、头戴红帽的校园猫咪" /><figcaption>今日值班 · 搭子招募处</figcaption></figure>
-    </details>
   </div>
 </template>

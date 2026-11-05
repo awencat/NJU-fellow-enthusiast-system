@@ -56,7 +56,7 @@
   width: auto;
   filter: drop-shadow(2px 3px 0 #fff);
 }
-.folio-columns { gap: 22px; grid-template-columns: 200px minmax(0, 1fr); }
+.folio-columns { gap: 22px; grid-template-columns: minmax(0, 1fr); }
 .folio-directory { border: 0; padding: 0; }
 .folio-directory h2 { border-bottom: 2px solid var(--atlas-ink); padding-bottom: 6px; }
 .folio-directory nav a {
@@ -88,8 +88,6 @@
 .folio-section li span { overflow-wrap: anywhere; }
 .folio-section li.atlas-lead { grid-template-columns: 64px minmax(0, 1fr) 104px; }
 .atlas-lead-cover { grid-column: 3; grid-row: 1 / 3; align-self: center; width: 104px; height: 60px; object-fit: cover; }
-.mascot-note summary { border-color: #94624f; box-shadow: 2px 2px 0 #efd8bb; }
-.mascot-note figure { border-color: #94624f; border-top: 4px solid var(--robe-red); }
 
 /* 每个章节拥有自己的物件；和标题同一行，不遮盖操作按钮。 */
 .app-main :is(.page-heading, .admin-heading, .profile-section-heading, .profile-hero) {

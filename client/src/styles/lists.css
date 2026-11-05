@@ -97,3 +97,5 @@
 .mates-heading { padding: 0 0 16px; }
 .segmented-tabs { border: 1px solid var(--line); }
 .segmented-tabs button.active { border-bottom: 2px solid var(--green); }
+
+.tag-search-panel { padding: 20px; margin-bottom: 24px; gap: 14px; }

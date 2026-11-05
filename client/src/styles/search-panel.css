@@ -1,0 +1,54 @@
+/* 分享与搭子列表共用的轻量搜索区，独立于全站像素按钮。 */
+.listing-page .tag-search-panel {
+  margin: 8px 0 24px;
+  padding: 0 0 24px;
+  border: 0;
+  border-bottom: 2px solid var(--robe-red);
+}
+.search-input-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto;
+  align-items: start;
+  gap: 20px;
+}
+.search-keyword { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.search-keyword > span, .listing-page .tag-picker legend { color: var(--ink-soft); font-size: 13px; font-weight: 600; }
+.listing-page .tag-picker { min-width: 0; }
+.listing-page .tag-picker legend { display: block; margin: 0 0 8px; padding: 0; line-height: inherit; }
+.listing-page .custom-tag { margin: 0; gap: 8px; }
+.listing-page .custom-tag input { max-width: none; min-width: 0; }
+.listing-page .tag-search-panel input { min-height: 44px; border-radius: 10px; background: #fff; }
+.listing-page .tag-search-panel input:focus { border-color: #875590; box-shadow: 0 0 0 3px #f2e8f4; }
+.search-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.search-actions small { margin-left: 4px; color: var(--muted); }
+/* 明确覆盖普通、悬停和按下状态，避免旧像素倒角重新出现。 */
+.app-main .listing-page .tag-search-panel :is(button, .button),
+.app-main .listing-page .tag-search-panel :is(button, .button):is(:hover, :active, :disabled) {
+  border: 1px solid #d5cbd7;
+  border-radius: 9px;
+  background: #fff;
+  color: #604369;
+  box-shadow: none;
+  text-shadow: none;
+  transform: none;
+  min-height: 40px;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: background-color .15s, border-color .15s;
+}
+.app-main .listing-page .tag-search-panel :is(button, .button):hover { background: #f6f0f7; border-color: #9a7aa0; }
+.app-main .listing-page .tag-search-panel :is(button, .button):active { background: #ede2ef; }
+.app-main .listing-page .tag-search-panel :is(button[type="submit"], .search-publish) { background: #6b3277; border-color: #6b3277; color: white; }
+.app-main .listing-page .tag-search-panel :is(button[type="submit"], .search-publish):hover { background: #572460; border-color: #572460; color: white; }
+.app-main .listing-page .tag-search-panel :is(button[type="submit"], .search-publish):active { background: #461c4e; color: white; }
+.app-main .listing-page .tag-search-panel .search-publish { margin-top: 29px; min-height: 44px; white-space: nowrap; }
+.app-main .listing-page .tag-search-panel .custom-tag button { min-height: 44px; flex: none; }
+.app-main .listing-page .tag-search-panel .selected-tags button { min-height: 22px; padding: 0 4px; border: 0; background: transparent; }
+@media (max-width: 760px) {
+  .search-input-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  .app-main .listing-page .tag-search-panel .search-publish { grid-column: 1 / -1; grid-row: 1; justify-self: end; margin-top: 0; }
+  .search-actions small { width: 100%; margin-left: 0; }
+}
+@media (max-width: 480px) {
+  .search-input-row { grid-template-columns: minmax(0, 1fr); }
+}

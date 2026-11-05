@@ -6,7 +6,7 @@
 .folio-title { padding-bottom: 18px; border-bottom: 3px double var(--line-dark); }
 .folio-title span, .folio-more { font-size: 13px; color: var(--green); }
 .folio-title h1 { margin: 6px 0 0; font-size: clamp(30px, 4vw, 46px); color: var(--green-dark); }
-.folio-columns { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; margin-top: 24px; }
+.folio-columns { display: grid; grid-template-columns:  minmax(0, 1fr); gap: 32px; margin-top: 24px; }
 .folio-directory { border: 1px solid var(--line); padding: 16px; align-self: start; }
 .folio-directory h2 { margin: 0 0 10px; font-size: 16px; }
 .folio-directory nav { display: grid; margin-bottom: 22px; }
@@ -26,12 +26,7 @@
 .folio-section li { padding: 12px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 2px 12px; align-items: baseline; }
 .folio-section li small { color: var(--warm-dark); }
 .folio-section li span { grid-column: 2; color: var(--muted); font-size: 12px; }
-.mascot-note { position: fixed; right: 16px; bottom: 18px; z-index: 20; }
-.mascot-note summary { padding: 5px 9px; background: white; border: 1px solid var(--line); color: var(--warm-dark); cursor: pointer; font-size: 12px; }
-.mascot-note figure { position: absolute; right: 0; bottom: 100%; margin: 0; width: 155px; padding: 10px; background: white; border: 1px solid var(--line); }
-.mascot-note figcaption { text-align: center; font-size: 12px; }
 @media (max-width: 820px) {
   .folio-columns { grid-template-columns: 1fr; gap: 18px; }
   .folio-directory nav { grid-template-columns: repeat(3, 1fr); }
-  .mascot-note { bottom: 80px; }
 }

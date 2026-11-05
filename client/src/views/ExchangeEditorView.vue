@@ -7,6 +7,7 @@ import { auth } from "@/stores/auth";
 import { notify } from "@/stores/toast";
 import type { ExchangePost } from "@/types";
 import ImageUpload from "@/components/ImageUpload.vue";
+import TagInput from "@/components/TagInput.vue";
 import LoadingBlock from "@/components/LoadingBlock.vue";
 
 const route = useRoute();
@@ -17,10 +18,7 @@ const editId = computed(() =>
 const loading = ref(Boolean(editId.value));
 const submitting = ref(false);
 const form = reactive({
-  kind:
-    route.query.kind === "news" && auth.state.user?.role === "admin"
-      ? ("news" as const)
-      : ("share" as const),
+  tags: [] as string[],
   title: "",
   content: "",
   imageUrl: null as string | null,
@@ -40,7 +38,7 @@ async function load() {
       router.replace("/exchange");
       return;
     }
-    form.kind = data.post.kind;
+    form.tags = data.post.tags;
     form.title = data.post.title;
     form.content = data.post.content;
     form.imageUrl = data.post.imageUrl;
@@ -86,14 +84,7 @@ onMounted(load);
         <h1>{{ editId ? "让这段文字更接近你想表达的" : "把值得分享的事写下来" }}</h1>
       </header>
       <form class="editor-card stack-form ui-panel ui-stack" @submit.prevent="submit">
-        <label v-if="auth.state.user?.role === 'admin'">
-          <span>内容类型</span>
-          <select v-model="form.kind">
-            <option value="share">同好分享</option>
-            <option value="news">校园新闻</option>
-          </select>
-          <small class="field-help">校园新闻仅管理员可以发布。</small>
-        </label>
+        <TagInput v-model="form.tags" />
         <label>
           <span>标题</span>
           <input

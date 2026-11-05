@@ -21,24 +21,6 @@ const router = useRouter();
 const mobileOpen = ref(false);
 const userMenuOpen = ref(false);
 
-const pageMeta = computed(() => {
-  if (route.path.startsWith("/exchange")) return { key: "exchange", kicker: "CAMPUS FEED", title: "同好交流" };
-  if (route.path.startsWith("/mates")) return { key: "mates", kicker: "FIND A PARTNER", title: "找搭子" };
-  if (route.path.startsWith("/messages")) return { key: "messages", kicker: "PRIVATE SPACE", title: "私信" };
-  if (route.path.startsWith("/profile")) {
-    const profileMeta: Record<string, { key: string; kicker: string; title: string }> = {
-      overview: { key: "profile", kicker: "YOUR CAMPUS SPACE", title: "个人资料" },
-      posts: { key: "profile-posts", kicker: "YOUR STORIES", title: "我的分享" },
-      mates: { key: "profile-mates", kicker: "YOUR PLANS", title: "我的搭子" },
-      applications: { key: "profile-applications", kicker: "REQUESTS", title: "申请记录" },
-      edit: { key: "profile-edit", kicker: "PROFILE SETTINGS", title: "编辑资料" },
-    };
-    return profileMeta[String(route.query.tab || "overview")] || profileMeta.overview;
-  }
-  if (route.path.startsWith("/admin")) return { key: "admin", kicker: "CONTROL ROOM", title: "管理后台" };
-  return { key: "home", kicker: "CAMPUS COMMUNITY", title: "发现" };
-});
-
 const nav = computed(() => [
   { to: "/", label: "发现" },
   { to: "/exchange", label: "同好交流" },
@@ -60,7 +42,7 @@ async function logout() {
 </script>
 
 <template>
-  <header class="site-header" :class="`header-${pageMeta.key}`">
+  <header class="site-header">
     <div class="header-inner ui-row">
       <RouterLink class="brand ui-row" to="/" @click="mobileOpen = false">
         <img class="brand-mark" src="/images/cat_tag3.png" alt="" width="38" height="38" />
@@ -69,11 +51,6 @@ async function logout() {
           <small>校园同好社区</small>
         </span>
       </RouterLink>
-
-      <div class="header-context" aria-live="polite">
-        <span>{{ pageMeta.kicker }}</span>
-        <strong>{{ pageMeta.title }}</strong>
-      </div>
 
       <nav class="desktop-nav ui-row">
         <RouterLink
