@@ -46,7 +46,7 @@
 .ui-panel {
   border: 1px solid var(--line);
   background: var(--surface);
-  border-radius: var(--radius);
+  border-radius: 0;
 }
 
 /* 三行摘要 */
@@ -62,14 +62,11 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.ui-card:hover {
-  transform: translateY(var(--card-lift, -3px));
-  box-shadow: var(--shadow-small);
-}
-
 /* 会话标题、摘要、后台内容统一使用单行省略。 */
 .ui-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.ui-card:hover { border-color: var(--green); }

@@ -11,9 +11,8 @@
   width: 100%;
   max-height: min(84vh, 820px);
   overflow: auto;
-  border-radius: 22px;
+  border-radius: 0;
   background: var(--surface);
-  box-shadow: 0 30px 80px rgba(18, 29, 23, 0.25);
 }
 
 .modal-header {
@@ -65,8 +64,7 @@
   min-width: 240px;
   max-width: 390px;
   padding: 12px 15px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-small);
+  border-radius: 0;
   font-size: 13px;
 }
 

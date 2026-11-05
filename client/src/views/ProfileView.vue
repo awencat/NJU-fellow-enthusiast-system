@@ -157,15 +157,15 @@ onMounted(load);
 
     <div v-if="activeTab === 'overview' && !loading" class="profile-overview-grid">
       <article class="profile-overview-card">
-        <FileText :size="20" /><strong>{{ posts.length }}</strong><span>篇分享</span>
+        <img src="/images/atlas/journal.svg" alt="" /><strong>{{ posts.length }}</strong><span>篇分享</span>
         <button type="button" @click="selectTab('posts')">查看我的分享 <ArrowRight :size="15" /></button>
       </article>
       <article class="profile-overview-card">
-        <Users :size="20" /><strong>{{ mates.length }}</strong><span>个搭子计划</span>
+        <img src="/images/atlas/compass.svg" alt="" /><strong>{{ mates.length }}</strong><span>个搭子计划</span>
         <button type="button" @click="selectTab('mates')">查看我的搭子 <ArrowRight :size="15" /></button>
       </article>
       <article class="profile-overview-card">
-        <MessageCircle :size="20" /><strong>{{ allApplications.length }}</strong><span>条申请记录</span>
+        <img src="/images/atlas/mail.svg" alt="" /><strong>{{ allApplications.length }}</strong><span>条申请记录</span>
         <button type="button" @click="selectTab('applications')">查看申请记录 <ArrowRight :size="15" /></button>
       </article>
     </div>

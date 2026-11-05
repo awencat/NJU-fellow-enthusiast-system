@@ -11,16 +11,6 @@
     min-width: 150px;
   }
 
-  .hero {
-    grid-template-columns: minmax(0, 1fr) 390px;
-    gap: 30px;
-  }
-
-  .hero-photo-main {
-    width: 290px;
-    height: 360px;
-  }
-
   .post-grid,
   .mate-grid,
   .exchange-grid,

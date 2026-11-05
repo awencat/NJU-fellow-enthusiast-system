@@ -86,9 +86,7 @@ onMounted(load);
   <div class="page-shell mates-page">
     <header class="page-heading split-heading mates-heading ui-heading-row">
       <div>
-        <span class="eyebrow ui-inline"><Users :size="14" /> 搭子广场</span>
-        <h1>想做的事，<em>一起去做吧。</em></h1>
-        <p>找到时间合拍、兴趣相近的同学。提交申请，经过发布者同意后即可私聊。</p>
+        <h1>搭子广场</h1>
       </div>
       <RouterLink
         class="button warm-button ui-inline"

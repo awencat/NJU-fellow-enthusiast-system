@@ -191,17 +191,6 @@
   box-shadow: 8px 10px 0 rgba(223, 133, 72, .14), 0 14px 28px rgba(35, 52, 43, .14);
 }
 
-.user-menu-panel::before {
-  position: absolute;
-  top: -5px;
-  right: 24px;
-  width: 34px;
-  height: 8px;
-  border-top: 2px solid var(--warm);
-  content: "";
-  transform: rotate(-4deg) skewX(-24deg);
-}
-
 .user-menu-panel a,
 .user-menu-panel button {
   display: flex;
@@ -270,3 +259,31 @@
 @media (max-width: 980px) {
   .header-context { display: none !important; }
 }
+
+/* 校徽紫刊头，金线标记当前栏目。 */
+.site-header {
+  color: white;
+  background: var(--campus-purple);
+  border-bottom: 2px solid #45144e;
+  backdrop-filter: none;
+}
+.site-header :is(.brand-copy small, .header-context span, .header-context strong, .desktop-nav a, .text-link, .user-menu-trigger svg) { color: white; }
+.site-header .header-context { border-color: var(--enamel-gold); }
+.site-header .desktop-nav a { border-radius: 0; border-bottom: 2px solid transparent; }
+.site-header .desktop-nav a:hover, .site-header .desktop-nav a.active {
+  color: white;
+  background: #501957;
+  border-bottom-color: var(--enamel-gold);
+}
+.site-header :is(.user-menu-trigger, .mobile-menu-button, .button) {
+  color: white;
+  background: transparent;
+  border: 1px solid #b792bf;
+  border-radius: 0;
+  box-shadow: none;
+}
+.site-header .user-menu-trigger:hover, .site-header .user-menu-trigger[aria-expanded="true"], .site-header .button:hover { color: white; background: #501957; box-shadow: none; }
+.site-header :is(.user-menu-panel, .mobile-nav) { color: white; background: var(--campus-purple); border-radius: 0; box-shadow: none; }
+.site-header :is(.user-menu-panel, .mobile-nav) :is(a, button) { color: white; border-radius: 0; }
+.site-header :is(.user-menu-panel, .mobile-nav) :is(a, button):hover { color: white; background: #501957; }
+.site-header :focus-visible { outline-color: var(--enamel-gold); }

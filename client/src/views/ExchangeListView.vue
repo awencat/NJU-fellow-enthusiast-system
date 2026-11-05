@@ -77,9 +77,7 @@ onMounted(load);
   <div class="page-shell">
     <header class="page-heading split-heading ui-heading-row">
       <div>
-        <span class="eyebrow ui-inline"><Sparkles :size="14" /> 同好交流</span>
-        <h1>发现共鸣，也分享你的日常</h1>
-        <p>一篇随手记录、一场校园活动，都可能成为认识新朋友的起点。</p>
+        <h1>同好交流</h1>
       </div>
       <RouterLink
         class="button ui-inline"
