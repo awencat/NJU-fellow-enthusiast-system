@@ -99,3 +99,23 @@
   text-shadow: none;
 }
 .app-main .application-filters button span { color: inherit; }
+
+/* 菜单内的操作与相邻链接保持同样的平面行样式。 */
+.site-header .header-actions .user-menu-panel button[role="menuitem"],
+.site-header .header-actions .user-menu-panel button[role="menuitem"]:is(:hover, :active) {
+  min-height: 38px;
+  margin: 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  box-shadow: none;
+  text-shadow: none;
+  transform: none;
+}
+.site-header .header-actions .user-menu-panel button[role="menuitem"]:is(:hover, :active) {
+  background: #501957;
+}

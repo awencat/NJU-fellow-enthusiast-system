@@ -60,9 +60,11 @@ func (r *Repository) Mates(ctx context.Context, viewer int64, f model.Filter) (m
 			args = append(args, "%"+f.Query+"%")
 		}
 	}
-	if f.Tag != "" {
-		conditions = append(conditions, "JSON_CONTAINS(p.tags, JSON_QUOTE(?))")
-		args = append(args, f.Tag)
+
+	match, matchArgs, order, rankArgs := tagSearch(f.Tags)
+	if match != "" {
+		conditions = append(conditions, match)
+		args = append(args, matchArgs...)
 	}
 	where := "WHERE " + strings.Join(conditions, " AND ")
 	page := model.Page[model.Mate]{Items: []model.Mate{}, Page: f.Page, PageSize: f.PageSize}
@@ -70,8 +72,9 @@ func (r *Repository) Mates(ctx context.Context, viewer int64, f model.Filter) (m
 		return page, err
 	}
 	params := append([]any{viewer}, args...)
+	params = append(params, rankArgs...)
 	params = append(params, f.PageSize, (f.Page-1)*f.PageSize)
-	rows, err := r.db.QueryContext(ctx, mateSelect+where+" ORDER BY p.created_at DESC,p.id DESC LIMIT ? OFFSET ?", params...)
+	rows, err := r.db.QueryContext(ctx, mateSelect+where+" ORDER BY "+order+"p.created_at DESC,p.id DESC LIMIT ? OFFSET ?", params...)
 	if err != nil {
 		return page, err
 	}

@@ -18,6 +18,9 @@ func protectContact(p *model.Mate, user model.User) {
 	}
 }
 func (s *Service) Mates(ctx context.Context, user model.User, f model.Filter) (model.Page[model.Mate], error) {
+	if err := validateTags(&f.Tags, false); err != nil {
+		return model.Page[model.Mate]{}, err
+	}
 	if f.Mine && user.ID == 0 {
 		return model.Page[model.Mate]{}, fail(401, "请先登录")
 	}

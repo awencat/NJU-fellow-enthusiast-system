@@ -132,9 +132,8 @@ async function submit() {
   <div class="auth-page">
     <section class="auth-story ui-row">
       <div class="auth-story-inner">
-        <h1>校园同好社区</h1>
-        <img class="auth-mascot" src="/images/campus-mascot.png" alt="校园吉祥物红袍猫" />
-        <p class="auth-caption">搭个伴 · 校猫图鉴 / 01</p>
+        <h1>喵呜——？</h1>
+        <img class="auth-mascot" src="/images/mascots/watermelon.png" alt="校园吉祥物红袍猫" />
       </div>
     </section>
 

@@ -3,13 +3,14 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"strings"
 	"time"
 
 	"campus-fellow/server/internal/model"
 )
 
-const exchangeSelect = `SELECT p.id,p.author_id,p.kind,p.title,p.content,p.image_url,p.status,p.created_at,p.updated_at,
+const exchangeSelect = `SELECT p.id,p.author_id,p.tags,p.title,p.content,p.image_url,p.status,p.created_at,p.updated_at,
  (SELECT COUNT(*) FROM likes l WHERE l.post_id=p.id),
  (SELECT COUNT(*) FROM favorites f WHERE f.post_id=p.id),
  (SELECT COUNT(*) FROM comments c WHERE c.post_id=p.id),
@@ -19,9 +20,19 @@ const exchangeSelect = `SELECT p.id,p.author_id,p.kind,p.title,p.content,p.image
 
 func scanExchange(row scanner) (model.Exchange, error) {
 	var p model.Exchange
+	var tags string
 	var image, avatar sql.NullString
 	var created, updated time.Time
-	err := row.Scan(&p.ID, &p.AuthorID, &p.Kind, &p.Title, &p.Content, &image, &p.Status, &created, &updated, &p.LikeCount, &p.FavoriteCount, &p.CommentCount, &p.Liked, &p.Favorited, &p.Author.ID, &p.Author.Username, &p.Author.Nickname, &avatar)
+	err := row.Scan(&p.ID, &p.AuthorID, &tags, &p.Title, &p.Content, &image, &p.Status, &created, &updated, &p.LikeCount, &p.FavoriteCount, &p.CommentCount, &p.Liked, &p.Favorited, &p.Author.ID, &p.Author.Username, &p.Author.Nickname, &avatar)
+	if err != nil {
+		return p, err
+	}
+	if err = json.Unmarshal([]byte(tags), &p.Tags); err != nil {
+		return p, err
+	}
+	if p.Tags == nil {
+		p.Tags = []string{}
+	}
 	p.ImageURL = optionalString(image)
 	p.Author.Avatar = optionalString(avatar)
 	p.CreatedAt = timestamp(created)
@@ -42,9 +53,11 @@ func (r *Repository) Exchanges(ctx context.Context, viewer int64, f model.Filter
 		conditions = append(conditions, "(p.title LIKE ? OR p.content LIKE ?)")
 		args = append(args, "%"+f.Query+"%", "%"+f.Query+"%")
 	}
-	if f.Kind == "share" || f.Kind == "news" {
-		conditions = append(conditions, "p.kind=?")
-		args = append(args, f.Kind)
+
+	match, matchArgs, order, rankArgs := tagSearch(f.Tags)
+	if match != "" {
+		conditions = append(conditions, match)
+		args = append(args, matchArgs...)
 	}
 	where := "WHERE " + strings.Join(conditions, " AND ")
 	page := model.Page[model.Exchange]{Items: []model.Exchange{}, Page: f.Page, PageSize: f.PageSize}
@@ -52,8 +65,9 @@ func (r *Repository) Exchanges(ctx context.Context, viewer int64, f model.Filter
 		return page, err
 	}
 	params := append([]any{viewer, viewer}, args...)
+	params = append(params, rankArgs...)
 	params = append(params, f.PageSize, (f.Page-1)*f.PageSize)
-	rows, err := r.db.QueryContext(ctx, exchangeSelect+where+" ORDER BY CASE p.kind WHEN 'news' THEN 0 ELSE 1 END,p.created_at DESC,p.id DESC LIMIT ? OFFSET ?", params...)
+	rows, err := r.db.QueryContext(ctx, exchangeSelect+where+" ORDER BY "+order+"p.created_at DESC,p.id DESC LIMIT ? OFFSET ?", params...)
 	if err != nil {
 		return page, err
 	}
@@ -72,14 +86,22 @@ func (r *Repository) Exchange(ctx context.Context, id, viewer int64) (model.Exch
 	return scanExchange(r.db.QueryRowContext(ctx, exchangeSelect+" WHERE p.id=?", viewer, viewer, id))
 }
 func (r *Repository) CreateExchange(ctx context.Context, author int64, in model.ExchangeInput) (int64, error) {
-	result, err := r.db.ExecContext(ctx, "INSERT INTO exchange_posts(author_id,kind,title,content,image_url) VALUES (?,?,?,?,?)", author, in.Kind, in.Title, in.Content, in.ImageURL)
+	tags, err := json.Marshal(in.Tags)
+	if err != nil {
+		return 0, err
+	}
+	result, err := r.db.ExecContext(ctx, "INSERT INTO exchange_posts(author_id,tags,title,content,image_url) VALUES (?,?,?,?,?)", author, string(tags), in.Title, in.Content, in.ImageURL)
 	if err != nil {
 		return 0, err
 	}
 	return result.LastInsertId()
 }
 func (r *Repository) UpdateExchange(ctx context.Context, id int64, in model.ExchangeInput) error {
-	_, err := r.db.ExecContext(ctx, "UPDATE exchange_posts SET kind=?,title=?,content=?,image_url=?,updated_at=CURRENT_TIMESTAMP(3) WHERE id=?", in.Kind, in.Title, in.Content, in.ImageURL, id)
+	tags, err := json.Marshal(in.Tags)
+	if err != nil {
+		return err
+	}
+	_, err = r.db.ExecContext(ctx, "UPDATE exchange_posts SET tags=?,title=?,content=?,image_url=?,updated_at=CURRENT_TIMESTAMP(3) WHERE id=?", string(tags), in.Title, in.Content, in.ImageURL, id)
 	return err
 }
 func (r *Repository) DeleteExchange(ctx context.Context, id int64) error {

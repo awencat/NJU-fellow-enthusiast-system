@@ -53,10 +53,10 @@ func TestValidationMatchesBrowserLengths(t *testing.T) {
 	if err := validateExchange(&in); err != nil {
 		t.Fatal(err)
 	}
-	if in.Title != "四字标题" || in.Kind != "share" {
+	if in.Title != "四字标题" {
 		t.Fatalf("normalization: %+v", in)
 	}
-	for _, tc := range []model.ExchangeInput{{Title: "短", Content: "正文不足"}, {Kind: "other", Title: "四字标题", Content: "这是足够十个字符的正文内容。"}} {
+	for _, tc := range []model.ExchangeInput{{Title: "短", Content: "正文不足"}, {Tags: []string{""}, Title: "四字标题", Content: "这是足够十个字符的正文内容。"}} {
 		if validateExchange(&tc) == nil {
 			t.Fatal("accepted invalid exchange")
 		}
