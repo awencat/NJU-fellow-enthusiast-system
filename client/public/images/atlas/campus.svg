@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 204">
+<defs><g id="tree"><path fill="#f9cb78" d="M-21 0v-17h5v-12h8v-8h12v4h10v9h7v14h5v11l-10 7h-26z"/><path fill="none" d="M0 19V-15m0 15-10-8m10 0 10-8"/></g><g id="window"><path fill="#8d7897" d="M0 0h8v15H0z"/><path stroke="#fff4db" d="M4 0v15M0 6h8"/></g></defs>
+<circle fill="#fff0c4" cx="472" cy="80" r="61"/>
+<g fill="none" stroke="#d7bfcb" stroke-linecap="round" stroke-width="2"><path d="M101 54h22q3-10 11-8 7-13 18-4 6-3 11 7h17M414 35h24q4-9 12-7 4-10 15-5 5 0 8 7h17M550 55q5-5 9 1 3-6 9-6"/></g>
+<path fill="#f1e9f1" d="M27 168l50-40 30 13 46-26 24 12 33-24 39 26 44-16 28 15 61-43 34 19 39-27 64 34 34-26 58 25 32-18 37 17v53H27z"/>
+<g stroke="#714c55" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<path fill="#fbebd3" d="M160 184v-63h218v63z"/><path fill="#baa0b1" d="m146 125 29-29h185l29 29z"/><path fill="#75536c" d="m141 125 249-1-7 6H146z"/>
+<path fill="#fff0d6" d="M246 184V87h48v97z"/><path fill="#ad7880" d="m238 91 30-23 34 23z"/><path fill="#754960" d="m232 92 71-1-7 5h-59z"/>
+<path fill="#fff0dc" d="M255 83V66h29v18z"/><path fill="#ae626c" d="m249 68 18-17 22 17z"/><path fill="none" d="M268 51V36"/><path fill="#c7414e" d="m269 36 17 3-6 5 5 3-16-2z"/>
+<circle cx="270" cy="107" r="8" fill="#fff6dc"/><path fill="none" d="M270 101v6l4 2"/>
+<use href="#window" x="174" y="140"/><use href="#window" x="191" y="140"/><use href="#window" x="208" y="140"/><use href="#window" x="225" y="140"/><use href="#window" x="304" y="140"/><use href="#window" x="321" y="140"/><use href="#window" x="338" y="140"/><use href="#window" x="355" y="140"/>
+<path fill="#956b71" d="M261 183v-39q9-12 18 0v39z"/>
+<use href="#tree" transform="translate(95 169) scale(1)"/><use href="#tree" transform="translate(138 175) scale(0.7)"/><use href="#tree" transform="translate(389 169) scale(0.8)"/><use href="#tree" transform="translate(532 175) scale(1.2)"/><use href="#tree" transform="translate(581 169) scale(0.9)"/><use href="#tree" transform="translate(617 175) scale(0.75)"/>
+<path d="M28 189h614" stroke="#71506b"/><path d="M63 194h68m14 0h21m193 1h87m22 0h41" stroke="#d7bda6"/>
+</g></svg>

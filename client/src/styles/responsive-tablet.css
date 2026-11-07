@@ -54,46 +54,6 @@
     padding-bottom: 85px;
   }
 
-  .hero {
-    grid-template-columns: 1fr;
-    padding-top: 18px;
-  }
-
-  .hero h1 {
-    font-size: clamp(45px, 11vw, 68px);
-  }
-
-  .hero-collage {
-    width: min(450px, 100%);
-    margin: 5px auto 0;
-  }
-
-  .home-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .home-stats div {
-    padding: 13px 20px;
-  }
-
-  .home-stats div:nth-child(2) {
-    border-right: 0;
-  }
-
-  .home-stats div:nth-child(1),
-  .home-stats div:nth-child(2) {
-    border-bottom: 1px solid var(--line);
-  }
-
-  .home-stats div:nth-child(3) {
-    padding-left: 0;
-  }
-
-  .mate-callout {
-    grid-template-columns: 1fr;
-    padding: 38px 34px;
-  }
-
   .split-heading {
     align-items: flex-start;
     flex-direction: column;
@@ -135,15 +95,6 @@
 
   .application-list, .auth-page {
     grid-template-columns: 1fr;
-  }
-
-  .auth-story {
-    min-height: 490px;
-    padding: 55px 35px;
-  }
-
-  .auth-story h1 {
-    font-size: 52px;
   }
 
   .auth-form-wrap {

@@ -4,7 +4,7 @@
 
 .exchange-article {
   overflow: hidden;
-  border-radius: 28px;
+  border-radius: 0;
 }
 
 .article-header {
@@ -41,7 +41,7 @@
   width: calc(100% - 80px);
   max-height: 510px;
   margin: 0 auto 31px;
-  border-radius: 18px;
+  border-radius: 0;
   object-fit: cover;
 }
 
@@ -58,7 +58,7 @@
   gap: 6px;
   padding: 14px 25px;
   border-top: 1px solid var(--line);
-  background: var(--surface-muted);
+  background: #fff;
 }
 
 .article-actions button {
@@ -67,7 +67,7 @@
   gap: 6px;
   padding: 8px 12px;
   border: 0;
-  border-radius: var(--radius-pill);
+  border-radius: 0;
   background: transparent;
   color: var(--ink-soft);
   font-size: 12px;
@@ -109,14 +109,13 @@
   align-items: flex-start;
   gap: 11px;
   padding: 16px;
-  border-radius: 16px;
+  border-radius: 0;
 }
 
 .comment-composer textarea {
   min-height: 54px;
   border: 0;
   background: transparent;
-  box-shadow: none;
   resize: none;
 }
 
@@ -128,7 +127,7 @@
   display: block;
   padding: 18px;
   border: 1px dashed var(--line-dark);
-  border-radius: 14px;
+  border-radius: 0;
   color: var(--green);
   text-align: center;
 }

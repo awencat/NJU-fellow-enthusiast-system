@@ -1,112 +1,73 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { Newspaper, PenLine, Search, Sparkles } from "lucide-vue-next";
+import { PenLine } from "lucide-vue-next";
 import { api } from "@/api";
 import { auth } from "@/stores/auth";
+import { notify } from "@/stores/toast";
+import TagInput from "@/components/TagInput.vue";
 import type { ExchangePost, Paginated } from "@/types";
 import PostCard from "@/components/PostCard.vue";
 import EmptyState from "@/components/EmptyState.vue";
 import LoadingBlock from "@/components/LoadingBlock.vue";
 import PaginationBar from "@/components/PaginationBar.vue";
-
 const route = useRoute();
 const router = useRouter();
 const posts = ref<ExchangePost[]>([]);
 const loading = ref(true);
-const q = ref(String(route.query.q ?? ""));
-const kind = ref(String(route.query.kind ?? ""));
-const page = ref(Number(route.query.page) || 1);
+const q = ref("");
+const tags = ref<string[]>([]);
+const page = ref(1);
 const total = ref(0);
 const pageSize = 9;
-
-async function load() {
-  loading.value = true;
-  try {
-    const params = new URLSearchParams({
-      page: String(page.value),
-      pageSize: String(pageSize),
-    });
-    if (q.value) params.set("q", q.value);
-    if (kind.value) params.set("kind", kind.value);
-    const data = await api<Paginated<ExchangePost>>(
-      `/api/exchange/posts?${params}`,
-    );
-    posts.value = data.items;
-    total.value = data.total;
-  } finally {
-    loading.value = false;
-  }
+let request = 0;
+watch(() => route.query, async query => {
+ q.value = String(query.q ?? "");
+ tags.value = (Array.isArray(query.tag) ? query.tag : query.tag ? [query.tag] : []).filter((t): t is string => typeof t === "string");
+ page.value = Math.max(1, Number(query.page) || 1);
+ const params = new URLSearchParams({ page: String(page.value), pageSize: String(pageSize) });
+ if(q.value) params.set("q", q.value);
+ tags.value.forEach(tag => params.append("tag",tag));
+ const current = ++request;
+ loading.value = true;
+ try {
+  const data = await api<Paginated<ExchangePost>>(`/api/exchange/posts?${params}`);
+  if(current === request) {posts.value = data.items; total.value = data.total;}
+ } catch(error) {
+  if(current === request) {posts.value = []; total.value = 0; notify(error instanceof Error ? error.message : "读取失败", "error");}
+ } finally {if(current === request) loading.value = false;}
+}, { immediate: true });
+function applySearch() {
+ router.replace({query: {...(q.value.trim() ? {q: q.value.trim()} : {}), ...(tags.value.length ? {tag: tags.value} : {})}});
 }
-
-function applyFilters() {
-  page.value = 1;
-  router.replace({
-    query: {
-      ...(q.value ? { q: q.value } : {}),
-      ...(kind.value ? { kind: kind.value } : {}),
-    },
-  });
-  load();
-}
-
+function clearFilters() { q.value = ""; tags.value = []; applySearch(); }
 function changePage(value: number) {
-  page.value = value;
-  router.replace({ query: { ...route.query, page: value } });
-  load();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+ router.replace({query: {...route.query,page: value}});
+ window.scrollTo({top:0, behavior:"smooth"});
 }
-
-watch(
-  () => route.query,
-  (query) => {
-    if (String(query.q ?? "") === q.value && String(query.kind ?? "") === kind.value) {
-      return;
-    }
-    q.value = String(query.q ?? "");
-    kind.value = String(query.kind ?? "");
-    page.value = Number(query.page) || 1;
-    load();
-  },
-);
-
-onMounted(load);
 </script>
 
 <template>
-  <div class="page-shell">
-    <header class="page-heading split-heading ui-heading-row">
-      <div>
-        <span class="eyebrow ui-inline"><Sparkles :size="14" /> 同好交流</span>
-        <h1>发现共鸣，也分享你的日常</h1>
-        <p>一篇随手记录、一场校园活动，都可能成为认识新朋友的起点。</p>
-      </div>
+  <div class="page-shell listing-page">
+
+
+    <form class="tag-search-panel" role="search" aria-label="筛选分享" @submit.prevent="applySearch">
+      <div class="search-input-row">
+      <label class="search-keyword"><span>关键词</span><input v-model="q" type="search" placeholder="搜索标题或正文" /></label>
+      <TagInput v-model="tags" />
       <RouterLink
-        class="button ui-inline"
+        class="search-publish button ui-inline"
         :to="auth.state.user ? '/exchange/new' : '/login?redirect=/exchange/new'"
       >
         <PenLine :size="17" /> 写一篇分享
       </RouterLink>
-    </header>
-
-    <div class="filter-bar ui-between">
-      <div class="segmented-tabs">
-        <button :class="{ active: !kind }" @click="kind = ''; applyFilters()">
-          全部
-        </button>
-        <button :class="{ active: kind === 'share' }" @click="kind = 'share'; applyFilters()">
-          同好分享
-        </button>
-        <button :class="{ active: kind === 'news' }" @click="kind = 'news'; applyFilters()">
-          <Newspaper :size="15" /> 校园新闻
-        </button>
       </div>
-      <form class="search-field compact ui-row ui-panel" @submit.prevent="applyFilters">
-        <Search :size="17" />
-        <input v-model="q" type="search" placeholder="搜索标题或正文" />
-        <button type="submit">搜索</button>
-      </form>
-    </div>
+      <div class="search-actions">
+        <button type="submit" class="button">筛选</button>
+        <button type="button" class="button secondary" @click="clearFilters">清空</button>
+        <small>标签支持部分文字匹配，匹配标签越多越靠前。</small>
+      </div>
+    </form>
 
     <LoadingBlock v-if="loading" />
     <template v-else>

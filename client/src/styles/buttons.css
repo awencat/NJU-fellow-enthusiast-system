@@ -1,0 +1,101 @@
+/* 像素按钮。零模糊高光和阴影组成硬质倒角，统一所有操作按钮。
+   页面只负责尺寸与布局；颜色在此通过变量切换。 */
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"]) {
+  --key-face: #dedbd4;
+  --key-hover: #eeeae2;
+  --key-light: #fffdf7;
+  --key-shade: #aaa398;
+  --key-base: #645a60;
+  --key-text: #30272e;
+  border: 2px solid #382d38;
+  border-radius: 0;
+  background: var(--key-face);
+  color: var(--key-text);
+  box-shadow: inset 2px 2px 0 var(--key-light), inset -2px -3px 0 var(--key-shade), 0 3px 0 var(--key-base);
+  text-shadow: 0 1px 0 var(--key-light);
+  font-weight: 700;
+  cursor: pointer;
+  transform: none;
+  transition: none;
+  min-height: 32px;
+  padding: 6px 12px 9px;
+}
+
+/* 主操作保留校紫，红色用于发布邀请和危险操作。 */
+:is(.app-main, .site-header, .modal-backdrop) :is(.button:not(.secondary), button[type="submit"], .folio-search button, .chat-composer button, .user-menu-trigger) {
+  --key-face: #733e80;
+  --key-hover: #875193;
+  --key-light: #aa79b4;
+  --key-shade: #4d235a;
+  --key-base: #38203e;
+  --key-text: #fff;
+  text-shadow: 1px 1px 0 #38203e;
+}
+:is(.app-main, .modal-backdrop) :is(.button.warm-button, .button.danger-button) {
+  --key-face: #ad3945;
+  --key-hover: #c54b57;
+  --key-light: #e88888;
+  --key-shade: #79232f;
+  --key-base: #4f202c;
+  --key-text: #fff;
+  text-shadow: 1px 1px 0 #4f202c;
+}
+
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"]):hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--key-hover);
+  color: var(--key-text);
+  border-color: #382d38;
+  box-shadow: inset 2px 2px 0 var(--key-light), inset -2px -3px 0 var(--key-shade), 0 3px 0 var(--key-base);
+  transform: none;
+}
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"]):active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(3px);
+  box-shadow: inset 2px 2px 0 var(--key-shade), inset -2px -2px 0 var(--key-light);
+}
+:is(.app-main, .site-header, .modal-backdrop) :is(button, .button):is(.active, .selected, [aria-pressed="true"], [aria-expanded="true"]) {
+  --key-face: #e6cb91;
+  --key-hover: #f3dca9;
+  --key-light: #fff0ca;
+  --key-shade: #b5965b;
+  --key-text: #382c32;
+  text-shadow: 0 1px 0 var(--key-light);
+}
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button, [role="button"]):focus-visible {
+  outline: 3px solid #c18a22;
+  outline-offset: 4px;
+}
+:is(.app-main, .site-header, .modal-backdrop, .toast-stack) :is(button, .button):is(:disabled, [aria-disabled="true"]) {
+  --key-face: #ddd9dc;
+  --key-light: #f4f1f3;
+  --key-shade: #bcb5bc;
+  --key-base: #9c939b;
+  --key-text: #716771;
+  opacity: 1;
+  cursor: not-allowed;
+  text-shadow: none;
+  transform: none;
+  box-shadow: inset 2px 2px 0 var(--key-light), inset -2px -2px 0 var(--key-shade), 0 2px 0 var(--key-base);
+}
+
+/* 图标按钮保持原占位；标签移除钮也有完整倒角。 */
+:is(.app-main, .site-header, .modal-backdrop) .button { min-height: 44px; }
+:is(.app-main, .site-header, .modal-backdrop) .button-small { min-height: 36px; }
+:is(.app-main, .site-header, .modal-backdrop) :is(.icon-button, .mobile-menu-button, .remove-image, .chat-back) { padding: 4px; }
+.app-main .selected-tags .tag button { min-height: 22px; min-width: 22px; padding: 1px; margin: 2px; }
+.app-main .upload-placeholder { padding: 18px; }
+.app-main .conversation-item { padding: 14px; }
+.app-main .profile-tabs, .app-main .segmented-tabs, .app-main .admin-tabs { gap: 6px; padding-bottom: 3px; }
+.site-header .user-menu-panel { gap: 6px; }
+.site-header .user-menu-trigger svg { color: inherit; }
+.site-header .header-actions .user-menu .user-menu-trigger {
+  --key-face: #fff;
+  --key-hover: #fff;
+  --key-light: #fff;
+  --key-shade: #ded1e2;
+  --key-base: #38203e;
+  --key-text: var(--campus-purple);
+  background: #fff;
+  color: var(--campus-purple);
+  text-shadow: none;
+}
+.app-main .application-filters button span { color: inherit; }

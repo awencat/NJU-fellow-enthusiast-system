@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ArrowRight, Leaf, ShieldCheck, Users } from "lucide-vue-next";
+import { ArrowRight } from "lucide-vue-next";
 import { auth } from "@/stores/auth";
 import { notify } from "@/stores/toast";
 import type { RegistrationConfig } from "@/types";
@@ -132,16 +132,9 @@ async function submit() {
   <div class="auth-page">
     <section class="auth-story ui-row">
       <div class="auth-story-inner">
-        <span class="hero-kicker ui-inline"><Leaf :size="15" /> 搭个伴 · 校园同好社区</span>
-        <h1>让每一个<br />“要不要一起？”<br /><em>都有回应。</em></h1>
-        <p>同好交流、兴趣搭子、安全的私聊空间。从一个真诚的邀请开始。</p>
-        <div class="auth-points ui-wrap">
-          <span><Users :size="18" /> 申请通过后开启私聊</span>
-          <span><ShieldCheck :size="18" /> 举报与社区管理机制</span>
-        </div>
-        <div class="auth-quote">
-          “我们不是因为完完全全一样才相遇，而是愿意一起走一段。”
-        </div>
+        <h1>校园同好社区</h1>
+        <img class="auth-mascot" src="/images/campus-mascot.png" alt="校园吉祥物红袍猫" />
+        <p class="auth-caption">搭个伴 · 校猫图鉴 / 01</p>
       </div>
     </section>
 

@@ -71,7 +71,6 @@ type AdminContent = {
   id: number;
   title: string;
   content: string;
-  kind?: string;
   status: "published" | "removed";
   createdAt: string;
   authorNickname: string;
@@ -241,9 +240,6 @@ onMounted(init);
         <p>审核举报、管理内容与账号，保持校园交流空间安全友善。</p>
       </div>
       <div class="admin-publish-actions">
-        <RouterLink class="button secondary button-small ui-inline" to="/exchange/new?kind=news">
-          <Plus :size="15" /> 发布新闻
-        </RouterLink>
         <RouterLink class="button button-small ui-inline" to="/exchange/new">
           <FileText :size="15" /> 发布分享
         </RouterLink>

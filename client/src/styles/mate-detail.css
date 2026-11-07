@@ -11,7 +11,7 @@
 
 .mate-detail-main,
 .mate-apply-panel {
-  border-radius: 25px;
+  border-radius: 0;
 }
 
 .mate-detail-main {
@@ -43,7 +43,7 @@
   width: 100%;
   max-height: 430px;
   margin: 28px 0;
-  border-radius: 17px;
+  border-radius: 0;
   object-fit: cover;
 }
 
@@ -66,8 +66,8 @@
   display: flex;
   flex-direction: column;
   padding: 16px;
-  border-radius: 13px;
-  background: var(--surface-muted);
+  border-radius: 0;
+  background: #fff;
 }
 
 .mate-info-grid svg {
@@ -90,7 +90,7 @@
 .contact-card {
   margin-top: 15px;
   padding: 17px 19px;
-  border-radius: 13px;
+  border-radius: 0;
   background: var(--warm-soft);
 }
 
@@ -143,7 +143,7 @@
 .status-callout {
   gap: 8px;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 0;
   background: var(--bg-deep);
   font-size: 12px;
   font-weight: 600;
@@ -177,7 +177,7 @@
 
 .application-card {
   padding: 19px;
-  border-radius: 16px;
+  border-radius: 0;
 }
 
 .application-head {

@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap");
-
 :root {
   color-scheme: light;
   --bg: #f4f2ea;
@@ -49,9 +47,7 @@ body {
   font-size: 15px;
   line-height: 1.65;
   background:
-    radial-gradient(circle at 8% 5%, rgba(225, 210, 175, 0.25), transparent 28%),
-    radial-gradient(circle at 95% 35%, rgba(200, 222, 209, 0.25), transparent 30%),
-    var(--bg);
+    #fff;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -134,4 +130,35 @@ h2 em {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 校园纸刊配色。页脚和移动底部导航继续使用原有主题。 */
+:root {
+  --campus-purple: #60216c;
+  --robe-red: #ad3039;
+  --enamel-gold: #e6b656;
+}
+html, body { background: #fff; }
+.app-main, .modal-backdrop, .toast-stack {
+  --bg: #fff;
+  --bg-deep: #fff;
+  --surface: #fff;
+  --surface-muted: #fff;
+  --ink: #302726;
+  --ink-soft: #52494c;
+  --muted: #6d646a;
+  --line: #d5cfd3;
+  --line-dark: #8c7d86;
+  --green: var(--campus-purple);
+  --green-dark: #45144e;
+  --green-pale: #f8f3f9;
+  --green-soft: #f2e8f4;
+  --warm: var(--robe-red);
+  --warm-dark: #922a32;
+  --warm-soft: #faf0ed;
+  --radius: 0px;
+  --radius-small: 0px;
+  --shadow: none;
+  --shadow-small: none;
+  color: var(--ink);
 }

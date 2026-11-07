@@ -31,7 +31,7 @@ textarea,
 select {
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 11px;
+  border-radius: 0;
   outline: none;
   background: var(--surface);
   color: var(--ink);
@@ -74,7 +74,7 @@ textarea::placeholder {
 .form-note {
   margin: 0;
   padding: 11px 13px;
-  border-radius: 10px;
+  border-radius: 0;
   background: var(--green-pale);
   color: var(--ink-soft);
   font-size: 11px;
@@ -87,7 +87,6 @@ textarea::placeholder {
 
 .editor-card {
   padding: 32px;
-  box-shadow: var(--shadow-small);
 }
 
 .large-textarea {
@@ -117,8 +116,8 @@ textarea::placeholder {
   width: 100%;
   min-height: 150px;
   border: 1px dashed var(--line-dark);
-  border-radius: 14px;
-  background: var(--surface-muted);
+  border-radius: 0;
+  background: #fff;
   color: var(--ink-soft);
   cursor: pointer;
 }
@@ -143,8 +142,8 @@ textarea::placeholder {
   position: relative;
   width: min(100%, 460px);
   overflow: hidden;
-  border-radius: 14px;
-  background: var(--bg-deep);
+  border-radius: 0;
+  background: #fff;
 }
 
 .image-preview img {
@@ -161,7 +160,7 @@ textarea::placeholder {
   height: 32px;
   border: 0;
   border-radius: var(--radius-round);
-  background: rgba(22, 31, 27, 0.74);
+  background: #fff;
   color: white;
   cursor: pointer;
 }
@@ -183,7 +182,7 @@ textarea::placeholder {
 .tag-options button {
   padding: 6px 13px;
   border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
+  border-radius: 0;
   background: var(--surface);
   font-size: 12px;
   cursor: pointer;
@@ -226,8 +225,7 @@ textarea::placeholder {
 .search-field {
   gap: 10px;
   padding: 6px 7px 6px 16px;
-  border-radius: 15px;
-  box-shadow: var(--shadow-small);
+  border-radius: 0;
 }
 
 .hero-search {
@@ -258,7 +256,7 @@ textarea::placeholder {
   min-height: 44px;
   padding: 0 19px;
   border: 0;
-  border-radius: 11px;
+  border-radius: 0;
   background: var(--green);
   color: white;
   font-size: 13px;
@@ -270,7 +268,6 @@ textarea::placeholder {
   width: min(360px, 100%);
   min-height: 44px;
   padding: 4px 5px 4px 13px;
-  box-shadow: none;
 }
 
 .search-field.compact button {

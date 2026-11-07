@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { Home, MessageCircle, UserRound, Users } from "lucide-vue-next";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import ToastHost from "@/components/ToastHost.vue";
 import { auth } from "@/stores/auth";
+
+const route = useRoute();
+const chapter = computed(() =>
+  /-(new|edit)$/.test(String(route.name)) ? "editor" : route.path.split("/")[1] || "home",
+);
 </script>
 
 <template>
   <AppHeader />
-  <main class="app-main">
+  <main class="app-main" :data-chapter="chapter">
     <RouterView />
   </main>
   <AppFooter />

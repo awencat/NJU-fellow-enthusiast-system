@@ -3,7 +3,11 @@ import { auth } from "@/stores/auth";
 
 const router = createRouter({
   history: createWebHistory(),
-  scrollBehavior: () => ({ top: 0 }),
+  scrollBehavior(to, _from, savedPosition) {
+    if (savedPosition) return savedPosition;
+    if (to.hash) return { el: to.hash, top: 88 };
+    return { top: 0 };
+  },
   routes: [
     {
       path: "/faq",

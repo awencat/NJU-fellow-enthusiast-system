@@ -1,0 +1,185 @@
+/* 校猫图鉴：章节签、物件插画与印章，共用于内容区域。 */
+.app-main {
+  --atlas-ink: #473036;
+  --atlas-plum: #65366e;
+  --atlas-gold: #efbf66;
+  --atlas-line: #c7b9bf;
+  --atlas-paper: #fff9eb;
+  --atlas-blush: #fff0eb;
+  --atlas-object: url("/images/atlas/guide.svg");
+}
+.app-main[data-chapter="exchange"] { --atlas-object: url("/images/atlas/journal.svg"); }
+.app-main[data-chapter="mates"] { --atlas-object: url("/images/atlas/compass.svg"); }
+.app-main[data-chapter="messages"] { --atlas-object: url("/images/atlas/mail.svg"); }
+.app-main[data-chapter="profile"] { --atlas-object: url("/images/atlas/pass.svg"); }
+.app-main[data-chapter="editor"] { --atlas-object: url("/images/atlas/pencil.svg"); }
+.app-main[data-chapter="admin"] { --atlas-object: url("/images/atlas/seal.svg"); }
+
+/* 首页题图：校园剪影与吉祥物分别缩放，小屏仍可读标题。 */
+.atlas-cover {
+  display: grid;
+  grid-template-columns: 0.95fr 1.3fr;
+  align-items: stretch;
+  border-bottom: 3px solid var(--atlas-ink);
+  min-height: 216px;
+  position: relative;
+}
+.atlas-cover-copy { align-self: center; padding: 12px 0 24px; }
+.atlas-imprint {
+  display: inline-block;
+  padding: 3px 10px;
+  color: white;
+  background: #ad3039;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  transform: rotate(-2deg);
+}
+.atlas-cover h1 {
+  margin: 12px 0;
+  color: var(--atlas-ink);
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.15;
+  letter-spacing: -.04em;
+}
+.atlas-cover h1 span { color: var(--atlas-plum); }
+.atlas-cover nav { display: flex; gap: 18px; font-size: 14px; color: var(--atlas-plum); }
+.atlas-cover-art {
+  position: relative;
+  background: url("/images/atlas/campus.svg") no-repeat center bottom / contain;
+}
+.atlas-cover-art img {
+  position: absolute;
+  bottom: 2px;
+  right: 15%;
+  height: 95%;
+  width: auto;
+  filter: drop-shadow(2px 3px 0 #fff);
+}
+.folio-columns { gap: 22px; grid-template-columns: minmax(0, 1fr); }
+.folio-directory { border: 0; padding: 0; }
+.folio-directory h2 { border-bottom: 2px solid var(--atlas-ink); padding-bottom: 6px; }
+.folio-directory nav a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  border-bottom: 1px dashed var(--atlas-line);
+  padding: 5px 2px;
+  color: var(--atlas-ink);
+  font-weight: 600;
+}
+.folio-directory nav img { width: 40px; height: 38px; }
+.folio-directory nav a:hover img { transform: rotate(-6deg); }
+.folio-content { min-width: 0; }
+.folio-section { scroll-margin-top: 90px; }
+.folio-section header {
+  background: #f7edf7;
+  border: 1px solid #bca2bf;
+  border-left: 5px solid var(--atlas-plum);
+  align-items: center;
+  padding: 4px 12px;
+}
+#field-mates header { background: #fff5df; border-color: #d9bc86; border-left-color: #bd703d; }
+.folio-section h2 { display: flex; align-items: center; gap: 6px; font-size: 21px; }
+.folio-section h2 img { width: 35px; }
+.folio-section li small { justify-self: start; padding: 0 5px; background: var(--atlas-blush); }
+.folio-section li a { font-weight: 600; }
+.folio-section li span { overflow-wrap: anywhere; }
+.folio-section li.atlas-lead { grid-template-columns: 64px minmax(0, 1fr) 104px; }
+.atlas-lead-cover { grid-column: 3; grid-row: 1 / 3; align-self: center; width: 104px; height: 60px; object-fit: cover; }
+
+/* 每个章节拥有自己的物件；和标题同一行，不遮盖操作按钮。 */
+.app-main :is(.page-heading, .admin-heading, .profile-section-heading, .profile-hero) {
+  position: relative;
+  padding: 16px 18px 16px 96px;
+  border: 0;
+  border-bottom: 2px solid var(--atlas-ink);
+  background-color: white;
+}
+.app-main :is(.page-heading, .admin-heading, .profile-section-heading, .profile-hero)::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 20px;
+  width: 69px;
+  height: 64px;
+  background: var(--atlas-object) no-repeat center / contain;
+  pointer-events: none;
+}
+.app-main :is(.page-heading, .admin-heading, .profile-section-heading) h1 {
+  color: var(--atlas-ink);
+  line-height: 1.25;
+  margin: 4px 0 8px;
+}
+.app-main :is(.article-meta, .mate-detail-main header, .faq-notes h1, .not-found h1)::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 48px;
+  height: 45px;
+  margin-right: 8px;
+  background: var(--atlas-object) no-repeat center / contain;
+}
+.app-main :is(.article-header, .mate-detail-main header) { border-bottom: 1px dashed var(--atlas-line); padding-bottom: 15px; }
+.app-main .tag, .app-main .status-pill { border-bottom: 1px solid currentColor; }
+.app-main :is(.filter-bar, .mate-search-panel, .editor-card, .chat-shell, .admin-panel, .profile-edit-card) {
+  border: 1px solid var(--atlas-line);
+  border-top: 3px solid var(--atlas-plum);
+}
+.app-main :is(.conversation-head, .admin-panel-head, .mate-card-footer) { background-color: var(--atlas-paper); }
+.app-main .post-card, .app-main .mate-card { border-color: var(--atlas-line); }
+.app-main .ui-card:hover { box-shadow: 3px 3px 0 #eadfcb; }
+.post-cover-placeholder { background: url("/images/atlas/journal.svg") no-repeat right 14px center / 30%, white; }
+.post-cover-placeholder > span { color: var(--atlas-gold); }
+.empty-state { border: 1px dashed var(--atlas-line); background: white; }
+.empty-state > span { width: 58px; height: 52px; background: var(--atlas-object) no-repeat center / contain; }
+.empty-state > span svg { display: none; }
+.profile-stat-row strong { color: var(--atlas-plum); }
+.profile-overview-card { border-top: 3px solid var(--atlas-gold); }
+.app-main .chat-intro { border-left: 3px solid var(--atlas-gold); }
+.modal-header { border-bottom: 2px solid #774c7c; }
+.toast { border-left: 4px solid #ad3039; }
+.auth-story-inner {
+  position: relative;
+  padding: 20px 22px 12px;
+  border: 0;
+  border-bottom: 3px solid var(--atlas-ink);
+  background: url("/images/atlas/campus.svg") no-repeat center 85% / 100% auto;
+}
+.auth-story { border-right: 1px dashed var(--atlas-line); }
+.auth-story h1 { border-bottom: 2px solid var(--atlas-plum); padding-bottom: 8px; color: var(--atlas-plum); }
+.auth-card { border-top: 4px solid var(--atlas-plum); padding-top: 18px; }
+.auth-mascot { position: relative; }
+.auth-caption { background: white; border-top: 0; color: var(--warm-dark); }
+
+.atlas-facts { width: 100%; margin: 24px 0; border-collapse: collapse; font-size: 14px; }
+.atlas-facts caption { padding: 7px 12px; background: #fff2d8; color: var(--atlas-ink); text-align: left; font-weight: 700; }
+.atlas-facts caption img { display: inline-block; vertical-align: middle; width: 30px; margin-right: 8px; }
+.atlas-facts th, .atlas-facts td { border: 1px solid var(--atlas-line); padding: 8px 12px; text-align: left; overflow-wrap: anywhere; }
+.atlas-facts th { width: 6.5em; background: var(--atlas-paper); }
+.profile-overview-card > img { width: 48px; grid-row: span 2; }
+.profile-overview-card { grid-template-columns: 48px 1fr; }
+.faq-contents { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 10px 12px; background: var(--atlas-paper); border-left: 4px solid var(--atlas-gold); }
+.faq-notes section { scroll-margin-top: 88px; }
+
+@media (max-width: 820px) {
+  .atlas-cover { min-height: 168px; grid-template-columns: 1fr 1fr; }
+  .folio-columns { grid-template-columns: 1fr; }
+  .folio-directory nav a { gap: 4px; }
+  .auth-story { border-right: 0; }
+  .auth-story-inner { background: white; }
+}
+@media (max-width: 620px) {
+  .atlas-cover { grid-template-columns: minmax(0, 1fr) 36%; min-height: 140px; }
+  .atlas-cover-art { background-size: auto 65%; }
+  .atlas-cover-art img { height: auto; width: min(116px, 100%); right: 0; }
+  .atlas-cover h1 { font-size: clamp(26px, 7vw, 38px); }
+  .atlas-cover nav { gap: 10px; font-size: 12px; }
+  .folio-directory nav img { width: 28px; height: 32px; }
+  .folio-section h2 { font-size: 18px; }
+  .folio-section li.atlas-lead { grid-template-columns: 56px minmax(0, 1fr) 66px; gap: 2px 6px; }
+  .atlas-lead-cover { width: 66px; height: 48px; }
+  .app-main :is(.page-heading, .admin-heading, .profile-section-heading, .profile-hero) { padding: 12px 8px 12px 53px; }
+  .app-main :is(.page-heading, .admin-heading, .profile-section-heading, .profile-hero)::before { width: 40px; height: 42px; top: 14px; left: 2px; }
+}

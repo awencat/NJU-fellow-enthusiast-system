@@ -15,19 +15,6 @@
     display: none;
   }
 
-  .hero {
-    min-height: auto;
-  }
-
-  .hero h1 {
-    font-size: 43px;
-    line-height: 1.18;
-  }
-
-  .hero-copy > p {
-    font-size: 14px;
-  }
-
   .hero-search {
     min-height: 52px;
     padding-left: 12px;
@@ -36,35 +23,6 @@
   .hero-search button {
     padding: 0 12px;
     font-size: 11px;
-  }
-
-  .hero-collage {
-    height: 350px;
-  }
-
-  .hero-photo-main {
-    width: 235px;
-    height: 300px;
-  }
-
-  .hero-photo-small {
-    width: 120px;
-    height: 135px;
-  }
-
-  .hero-note {
-    width: 145px;
-    min-height: 95px;
-    padding: 20px 16px;
-  }
-
-  .hero-note strong {
-    font-size: 14px;
-  }
-
-  .hero-float-card {
-    right: 0;
-    width: 152px;
   }
 
   .section-block {
@@ -86,15 +44,6 @@
 
   .post-cover {
     height: 205px;
-  }
-
-  .mate-callout {
-    margin-top: 58px;
-    padding: 32px 24px;
-  }
-
-  .home-stats span {
-    font-size: 10px;
   }
 
   .mates-heading {
@@ -142,19 +91,6 @@
 
   .comment-composer .button {
     margin-left: auto;
-  }
-
-  .auth-story {
-    min-height: 430px;
-    padding: 44px 24px;
-  }
-
-  .auth-story h1 {
-    font-size: 42px;
-  }
-
-  .auth-quote {
-    display: none;
   }
 
   .mate-detail-main {

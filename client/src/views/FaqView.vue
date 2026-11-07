@@ -2,7 +2,13 @@
   <article class="faq-notes">
     <RouterLink to="/">← 返回首页</RouterLink>
     <h1>常见问题</h1>
-    <section>
+    <nav class="faq-contents" aria-label="问题目录">
+      <a href="#registration">注册与验证</a>
+      <a href="#messages">搭子与私信</a>
+      <a href="#moderation">举报与申诉</a>
+      <a href="#uploads">图片上传</a>
+    </nav>
+    <section id="registration">
       <h2>注册需要校园邮箱吗？</h2>
       <p>需要。请使用注册页面提示的校园邮箱后缀，填写邮箱并输入邮件中的 6 位验证码完成注册。</p>
     </section>
@@ -10,11 +16,11 @@
       <h2>收不到验证码怎么办？</h2>
       <p>验证码有效期为 60 秒。请先检查垃圾邮件，倒计时结束后可重新发送。若仍无法收到，请到 GitHub Issues 反馈，并说明注册页面的提示。</p>
     </section>
-    <section>
+    <section id="messages">
       <h2>为什么只能和部分同学私信？</h2>
       <p>搭子申请通过后才会开放私信。请先在搭子详情页提交申请，等待对方通过。</p>
     </section>
-    <section>
+    <section id="moderation">
       <h2>发现不合适的内容怎么办？</h2>
       <p>可对帖子或用户提交举报，由管理员核实处理。</p>
     </section>
@@ -22,7 +28,7 @@
       <h2>账号被封禁后怎么办？</h2>
       <p>封禁后无法正常登录和使用社区功能。若对处理有异议，可通过 GitHub Issues 说明情况，请勿公开密码、验证码等敏感信息。</p>
     </section>
-    <section>
+    <section id="uploads">
       <h2>图片上传有什么限制？</h2>
       <p>支持 JPG、PNG、WebP 和 GIF，单张图片不超过 5MB。</p>
     </section>

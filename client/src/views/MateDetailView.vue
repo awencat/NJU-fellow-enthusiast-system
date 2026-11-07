@@ -7,13 +7,11 @@ import {
   Clock3,
   Flag,
   LockKeyhole,
-  MapPin,
   MessageCircle,
   Pencil,
   Send,
   Trash2,
   UserCheck,
-  Users,
   X,
 } from "lucide-vue-next";
 import { api } from "@/api";
@@ -174,23 +172,14 @@ onMounted(load);
             <p>{{ mate.details }}</p>
           </div>
 
-          <div class="mate-info-grid">
-            <div>
-              <Clock3 :size="20" />
-              <span>持续时间</span>
-              <strong>{{ mate.duration }}</strong>
-            </div>
-            <div>
-              <MapPin :size="20" />
-              <span>见面地点</span>
-              <strong>{{ mate.location || "线上 / 待商议" }}</strong>
-            </div>
-            <div>
-              <Users :size="20" />
-              <span>当前申请</span>
-              <strong>{{ mate.applicationCount }} 人</strong>
-            </div>
-          </div>
+          <table class="atlas-facts">
+            <caption><img src="/images/atlas/compass.svg" alt="" />同行资料</caption>
+            <tbody>
+              <tr><th scope="row">持续时间</th><td>{{ mate.duration }}</td></tr>
+              <tr><th scope="row">见面地点</th><td>{{ mate.location || "线上 / 待商议" }}</td></tr>
+              <tr><th scope="row">当前申请</th><td>{{ mate.applicationCount }} 人</td></tr>
+            </tbody>
+          </table>
 
           <section v-if="mate.notes" class="mate-notes">
             <strong>补充备注</strong>

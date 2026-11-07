@@ -158,7 +158,7 @@ onMounted(load);
       <article class="exchange-article ui-panel">
         <header class="article-header">
           <div class="article-meta ui-row">
-            <span class="eyebrow ui-inline">{{ post.kind === "news" ? "校园新闻" : "同好分享" }}</span>
+            <span class="eyebrow ui-inline"><span v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span></span>
             <span>{{ formatDateTime(post.createdAt) }}</span>
             <span v-if="post.status === 'removed'" class="status-pill removed ui-inline">已下架</span>
           </div>

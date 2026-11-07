@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ArrowLeft, Save, X } from "lucide-vue-next";
+import { ArrowLeft, Save } from "lucide-vue-next";
 import { api } from "@/api";
 import { auth } from "@/stores/auth";
 import { notify } from "@/stores/toast";
 import type { MatePost } from "@/types";
 import ImageUpload from "@/components/ImageUpload.vue";
+import TagInput from "@/components/TagInput.vue";
 import LoadingBlock from "@/components/LoadingBlock.vue";
 
 const route = useRoute();
@@ -16,10 +17,9 @@ const editId = computed(() =>
 );
 const loading = ref(Boolean(editId.value));
 const submitting = ref(false);
-const newTag = ref("");
 const form = reactive({
   title: "",
-  tags: ["周末"] as string[],
+  tags: [] as string[],
   details: "",
   imageUrl: null as string | null,
   location: "",
@@ -27,22 +27,6 @@ const form = reactive({
   duration: "",
   notes: "",
 });
-const suggestedTags = ["周末", "运动", "学习", "摄影", "户外", "长期", "今晚", "美食", "音乐"];
-
-function toggleTag(tag: string) {
-  if (form.tags.includes(tag)) {
-    form.tags = form.tags.filter((item) => item !== tag);
-  } else if (form.tags.length < 6) {
-    form.tags.push(tag);
-  }
-}
-
-function addCustomTag() {
-  const tag = newTag.value.trim();
-  if (tag && !form.tags.includes(tag) && form.tags.length < 6) form.tags.push(tag);
-  newTag.value = "";
-}
-
 async function load() {
   if (!editId.value) return;
   try {
@@ -116,35 +100,7 @@ onMounted(load);
           />
         </label>
 
-        <fieldset class="tag-picker">
-          <legend>标签 <small>最多 6 个</small></legend>
-          <div class="tag-options ui-wrap">
-            <button
-              v-for="tag in suggestedTags"
-              :key="tag"
-              type="button"
-              :class="{ selected: form.tags.includes(tag) }"
-              @click="toggleTag(tag)"
-            >
-              {{ tag }}
-            </button>
-          </div>
-          <div class="custom-tag">
-            <input
-              v-model="newTag"
-              maxlength="16"
-              placeholder="自定义标签"
-              @keydown.enter.prevent="addCustomTag"
-            />
-            <button type="button" class="text-button ui-inline" @click="addCustomTag">添加</button>
-          </div>
-          <div class="selected-tags ui-wrap">
-            <span v-for="tag in form.tags" :key="tag" class="tag ui-inline">
-              {{ tag }}
-              <button type="button" @click="toggleTag(tag)"><X :size="12" /></button>
-            </span>
-          </div>
-        </fieldset>
+        <TagInput v-model="form.tags" />
 
         <label>
           <span>详细说明</span>

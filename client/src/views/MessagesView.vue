@@ -195,10 +195,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="messages-page page-shell wide-shell">
-    <header class="page-heading compact-heading">
-      <span class="eyebrow ui-inline">私信</span>
-      <h1>把同行的约定，继续聊下去</h1>
-    </header>
+
 
     <LoadingBlock v-if="loading" />
     <EmptyState

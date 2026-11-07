@@ -12,7 +12,6 @@
 .post-card {
   --card-lift: -4px;
   overflow: hidden;
-  box-shadow: 0 2px 0 rgba(255, 255, 255, 0.8) inset;
 }
 
 .post-card-link {
@@ -24,7 +23,7 @@
   position: relative;
   height: 220px;
   overflow: hidden;
-  background: var(--bg-deep);
+  background: #fff;
 }
 
 .post-cover img {
@@ -34,16 +33,11 @@
   transition: transform 0.5s ease;
 }
 
-.post-card:hover .post-cover img {
-  transform: scale(1.035);
-}
-
 .post-cover-placeholder {
   justify-content: center;
   padding: 26px;
   background:
-    linear-gradient(140deg, rgba(222, 234, 225, 0.92), rgba(242, 225, 200, 0.88)),
-    var(--green-soft);
+    #fff;
 }
 
 .post-cover-placeholder > span {
@@ -67,7 +61,7 @@
   left: 14px;
   gap: 5px;
   padding: 5px 10px;
-  border-radius: var(--radius-pill);
+  border-radius: 0;
   background: rgba(255, 253, 248, 0.9);
   color: var(--green);
   font-size: 11px;
@@ -192,8 +186,8 @@
 .mate-card-footer {
   padding: 14px 22px;
   border-top: 1px solid var(--line);
-  background: var(--surface-muted);
-  border-radius: 0 0 var(--radius) var(--radius);
+  background: #fff;
+  border-radius: 0;
 }
 
 .application-count {
