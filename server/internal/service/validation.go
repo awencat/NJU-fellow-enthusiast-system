@@ -35,14 +35,11 @@ func contains(value string, options ...string) bool {
 }
 
 func validateExchange(in *model.ExchangeInput) error {
-	if in.Kind == "" {
-		in.Kind = "share"
-	}
 	in.Title = strings.TrimSpace(in.Title)
 	in.Content = strings.TrimSpace(in.Content)
 	nullEmpty(&in.ImageURL)
-	if !contains(in.Kind, "share", "news") {
-		return fail(400, "无效的内容类型")
+	if err := validateTags(&in.Tags, false); err != nil {
+		return err
 	}
 	if !length(in.Title, 4, 100) {
 		return fail(400, "标题应为4—100个字符")
@@ -66,14 +63,8 @@ func validateMate(in *model.MateInput) error {
 	if !length(in.Title, 4, 100) || !length(in.Details, 10, 10000) {
 		return fail(400, "标题应为4—100个字符，详细说明应为10—10000个字符")
 	}
-	if len(in.Tags) < 1 || len(in.Tags) > 6 {
-		return fail(400, "请选择1—6个标签")
-	}
-	for i := range in.Tags {
-		in.Tags[i] = strings.TrimSpace(in.Tags[i])
-		if !length(in.Tags[i], 1, 16) {
-			return fail(400, "标签应为1—16个字符")
-		}
+	if err := validateTags(&in.Tags, true); err != nil {
+		return err
 	}
 	if !length(in.Contact, 2, 100) || !length(in.Duration, 1, 100) {
 		return fail(400, "请填写联系方式和持续时间，且均不超过100个字符")
@@ -81,5 +72,29 @@ func validateMate(in *model.MateInput) error {
 	if !optionalLength(in.ImageURL, 500) || !optionalLength(in.Location, 100) || !optionalLength(in.Notes, 1000) {
 		return fail(400, "图片地址、地点或备注过长")
 	}
+	return nil
+}
+
+func validateTags(tags *[]string, required bool) error {
+	if len(*tags) > 6 {
+		return fail(400, "最多6个标签")
+	}
+	clean := []string{}
+	seen := map[string]bool{}
+	for _, tag := range *tags {
+		tag = strings.TrimSpace(tag)
+		if !length(tag, 1, 16) {
+			return fail(400, "标签应为1—16个字符")
+		}
+		key := strings.ToLower(tag)
+		if !seen[key] {
+			clean = append(clean, tag)
+			seen[key] = true
+		}
+	}
+	if required && len(clean) == 0 {
+		return fail(400, "请填写至少1个标签")
+	}
+	*tags = clean
 	return nil
 }

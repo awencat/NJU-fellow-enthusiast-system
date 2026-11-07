@@ -12,6 +12,9 @@ func canManage(user model.User, owner int64) bool {
 	return user.Role == "admin" || user.ID != 0 && user.ID == owner
 }
 func (s *Service) Exchanges(ctx context.Context, user model.User, f model.Filter) (model.Page[model.Exchange], error) {
+	if err := validateTags(&f.Tags, false); err != nil {
+		return model.Page[model.Exchange]{}, err
+	}
 	if f.Mine && user.ID == 0 {
 		return model.Page[model.Exchange]{}, fail(401, "请先登录")
 	}
@@ -38,9 +41,6 @@ func (s *Service) CreateExchange(ctx context.Context, user model.User, in model.
 	if err := validateExchange(&in); err != nil {
 		return 0, err
 	}
-	if in.Kind == "news" && user.Role != "admin" {
-		return 0, fail(403, "只有管理员可以发布校园新闻")
-	}
 	return s.Repo.CreateExchange(ctx, user.ID, in)
 }
 func (s *Service) UpdateExchange(ctx context.Context, user model.User, id int64, in model.ExchangeInput) error {
@@ -53,9 +53,6 @@ func (s *Service) UpdateExchange(ctx context.Context, user model.User, id int64,
 	}
 	if err := validateExchange(&in); err != nil {
 		return err
-	}
-	if in.Kind == "news" && user.Role != "admin" {
-		return fail(403, "只有管理员可以发布校园新闻")
 	}
 	return s.Repo.UpdateExchange(ctx, id, in)
 }

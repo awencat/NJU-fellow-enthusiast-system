@@ -140,7 +140,7 @@ func number(value string, fallback, maximum int) int {
 }
 func filter(r *http.Request) model.Filter {
 	q := r.URL.Query()
-	return model.Filter{Query: strings.TrimSpace(q.Get("q")), Kind: q.Get("kind"), Tag: strings.TrimSpace(q.Get("tag")), Mine: q.Get("mine") == "true", Page: number(q.Get("page"), 1, 1000000), PageSize: number(q.Get("pageSize"), 12, 50)}
+	return model.Filter{Query: strings.TrimSpace(q.Get("q")), Tags: q["tag"], Mine: q.Get("mine") == "true", Page: number(q.Get("page"), 1, 1000000), PageSize: number(q.Get("pageSize"), 12, 50)}
 }
 func (a *API) cookie(w http.ResponseWriter, value string, clear bool) {
 	cookie := &http.Cookie{Name: "campus_token", Value: value, Path: "/", HttpOnly: true, Secure: a.cfg.Production, SameSite: http.SameSiteLaxMode, MaxAge: 7 * 24 * 60 * 60}

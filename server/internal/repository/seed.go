@@ -62,16 +62,16 @@ func (r *Repository) Seed(ctx context.Context, cfg config.Config) error {
 			ids = append(ids, id)
 		}
 		exchanges := []struct {
-			author                      int64
-			kind, title, content, image string
+			author                int64
+			title, content, image string
 		}{
-			{ids[0], "share", "在仙林，把秋天装进周末的六个小时", "从北大楼出发，沿梧桐道慢慢走。没有赶路的任务，只带了一台相机和一杯还温热的拿铁。下午在草坪上坐了很久，看社团排练，也听陌生人弹吉他。\n\n如果你也喜欢这样不设目的地的散步，欢迎在评论区交换路线。", "/demo/autumn-walk.svg"},
-			{ids[1], "share", "一个人自习也能有节奏：我的图书馆续命歌单", "最近在准备考试，摸索出一套自己的自习节奏：前 50 分钟专注，休息时去接水，再用 10 分钟整理刚才没想明白的地方。\n\n歌单以纯音乐为主，不会抢走注意力。也想听听大家压箱底的自习好物。", "/demo/library.svg"},
-			{admin, "news", "校园社团开放日：本周六，来和 40+ 社团碰面", "本周六 10:00—16:00，中心广场将举行秋季社团开放日。现场包括社团展演、互动体验和招新咨询。参与活动无需报名，请根据现场指引有序排队。", "/demo/clubs.svg"},
+			{ids[0], "在仙林，把秋天装进周末的六个小时", "从北大楼出发，沿梧桐道慢慢走。没有赶路的任务，只带了一台相机和一杯还温热的拿铁。下午在草坪上坐了很久，看社团排练，也听陌生人弹吉他。\n\n如果你也喜欢这样不设目的地的散步，欢迎在评论区交换路线。", "/demo/autumn-walk.svg"},
+			{ids[1], "一个人自习也能有节奏：我的图书馆续命歌单", "最近在准备考试，摸索出一套自己的自习节奏：前 50 分钟专注，休息时去接水，再用 10 分钟整理刚才没想明白的地方。\n\n歌单以纯音乐为主，不会抢走注意力。也想听听大家压箱底的自习好物。", "/demo/library.svg"},
+			{admin, "校园社团开放日：本周六，来和 40+ 社团碰面", "本周六 10:00—16:00，中心广场将举行秋季社团开放日。现场包括社团展演、互动体验和招新咨询。参与活动无需报名，请根据现场指引有序排队。", "/demo/clubs.svg"},
 		}
 		posts := make([]int64, 0, 3)
 		for _, p := range exchanges {
-			result, err := tx.ExecContext(ctx, "INSERT INTO exchange_posts(author_id,kind,title,content,image_url) VALUES (?,?,?,?,?)", p.author, p.kind, p.title, p.content, p.image)
+			result, err := tx.ExecContext(ctx, "INSERT INTO exchange_posts(author_id,tags,title,content,image_url) VALUES (?,JSON_ARRAY(),?,?,?)", p.author, p.title, p.content, p.image)
 			if err != nil {
 				return err
 			}

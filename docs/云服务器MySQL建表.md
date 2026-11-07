@@ -104,7 +104,7 @@ EXIT;
 | 表 | 用途 |
 | --- | --- |
 | users | 账号、密码哈希、资料、角色与封禁状态 |
-| exchange_posts | 同好分享和校园新闻 |
+| exchange_posts | 分享帖子及自定义标签 |
 | mate_posts | 搭子邀请、标签和通过申请后可见的联系方式 |
 | comments | 分享评论 |
 | likes | 点赞，限制同一用户对同一帖子重复记录 |
@@ -127,6 +127,7 @@ EXIT;
 ```bash
 mysql --default-character-set=utf8mb4 -h 127.0.0.1 -P 3306 -u bigshot_app -p bigshot < server/internal/repository/migrations/001_initial.sql
 mysql --default-character-set=utf8mb4 -h 127.0.0.1 -P 3306 -u bigshot_app -p bigshot < server/internal/repository/migrations/002_email_verification.sql
+mysql --default-character-set=utf8mb4 -h 127.0.0.1 -P 3306 -u bigshot_app -p bigshot < server/internal/repository/migrations/003_exchange_tags.sql
 ```
 
 这两步创建13张业务和验证相关表。后续 Go 服务首次启动会创建 `schema_migrations` 并登记版本；SQL 使用 `CREATE TABLE IF NOT EXISTS`，不会重复插入业务数据。不要在 SQL 出错后手工登记迁移成功，也不要使用 `--force` 忽略错误。

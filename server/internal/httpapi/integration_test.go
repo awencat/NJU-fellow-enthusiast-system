@@ -208,12 +208,51 @@ func TestIntegration(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { repo.Close() })
+	// Build an existing pre-tag schema with a real post before applying upgrades.
+	legacy, err := os.ReadFile(filepath.Join(root, "server/internal/repository/migrations/001_initial.sql"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Use the repository's database via a separate connector scoped to this schema.
+	mc.DBName = testDatabase
+	legacyConnector, err := mysql.NewConnector(mc)
+	if err != nil {
+		t.Fatal(err)
+	}
+	legacyDB := sql.OpenDB(legacyConnector)
+	for _, statement := range strings.Split(string(legacy), ";") {
+		if strings.TrimSpace(statement) != "" {
+			if _, err := legacyDB.Exec(statement); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	legacyUser, err := legacyDB.Exec("INSERT INTO users(username,password_hash,nickname) VALUES ('legacy_user','unused','旧用户')")
+	if err != nil {
+		t.Fatal(err)
+	}
+	legacyID, _ := legacyUser.LastInsertId()
+	if _, err := legacyDB.Exec("INSERT INTO exchange_posts(author_id,kind,title,content) VALUES (?,'news','旧帖标题','保留旧帖正文')", legacyID); err != nil {
+		t.Fatal(err)
+	}
 	if err := repo.Migrate(ctx); err != nil {
 		t.Fatal(err)
 	}
 	if err := repo.Migrate(ctx); err != nil {
 		t.Fatalf("migration not repeatable: %v", err)
 	}
+	var oldContent, oldTags string
+	if err := legacyDB.QueryRow("SELECT content,tags FROM exchange_posts WHERE author_id=?", legacyID).Scan(&oldContent, &oldTags); err != nil || oldContent != "保留旧帖正文" || oldTags != "[]" {
+		t.Fatalf("legacy preservation: %s %s %v", oldContent, oldTags, err)
+	}
+	var kindColumns int
+	if err := legacyDB.QueryRow("SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=? AND table_name='exchange_posts' AND column_name='kind'", testDatabase).Scan(&kindColumns); err != nil || kindColumns != 0 {
+		t.Fatal("legacy kind column remains", err)
+	}
+	if _, err := legacyDB.Exec("DELETE FROM users WHERE id=?", legacyID); err != nil {
+		t.Fatal(err)
+	}
+	legacyDB.Close()
 	mc.DBName = testDatabase
 	dataConnector, err := mysql.NewConnector(mc)
 	if err != nil {
@@ -378,15 +417,14 @@ func TestIntegration(t *testing.T) {
 	post := call[idResponse](t, alice, "POST", "/api/exchange/posts", model.ExchangeInput{Title: prefix + "分享", Content: "这是用于验证完整分享业务流程的正文。"}, 201).ID
 	postURL := pathFor("/api/exchange/posts/%d", post)
 	t.Run("exchange CRUD search reactions comments", func(t *testing.T) {
-		in := model.ExchangeInput{Kind: "share", Title: prefix + "更新分享", Content: "更新后的正文足够长，也包含表情😀。"}
+		in := model.ExchangeInput{Tags: []string{"摄影", "户外"}, Title: prefix + "更新分享", Content: "更新后的正文足够长，也包含表情😀。"}
 		call[messageResponse](t, bob, "PATCH", postURL, in, 403)
 		call[messageResponse](t, bob, "DELETE", postURL, nil, 403)
 		call[messageResponse](t, alice, "PATCH", postURL, in, 200)
-		call[messageResponse](t, bob, "POST", "/api/exchange/posts", model.ExchangeInput{Kind: "news", Title: "普通用户新闻", Content: "普通用户应当无法发布校园新闻内容。"}, 403)
-		call[idResponse](t, admin, "POST", "/api/exchange/posts", model.ExchangeInput{Kind: "news", Title: prefix + "校园新闻", Content: "管理员发布校园新闻的正文用于验收。"}, 201)
+		call[idResponse](t, admin, "POST", "/api/exchange/posts", model.ExchangeInput{Tags: []string{"摄影"}, Title: prefix + "校园新闻", Content: "管理员发布校园新闻的正文用于验收。"}, 201)
 		page := call[model.Page[model.Exchange]](t, guest, "GET", "/api/exchange/posts?q="+prefix+"&pageSize=1", nil, 200)
-		if page.Total != 2 || len(page.Items) != 1 || page.Items[0].Kind != "news" {
-			t.Fatalf("search/news order: %+v", page)
+		if page.Total != 2 || len(page.Items) != 1 || len(page.Items[0].Tags) == 0 {
+			t.Fatalf("search/tags: %+v", page)
 		}
 		call[messageResponse](t, guest, "GET", "/api/exchange/posts?mine=true", nil, 401)
 		for _, kind := range []string{"like", "favorite"} {
@@ -479,6 +517,41 @@ func TestIntegration(t *testing.T) {
 	mateIn := model.MateInput{Title: prefix + "周末搭子", Tags: []string{"户外", "周末"}, Details: "一起去校园公共场所完成测试活动。", Location: ptr("中心广场"), Contact: "仅通过后可见的联系信息", Duration: "周六", Notes: ptr("带水")}
 	mate := call[idResponse](t, alice, "POST", "/api/mates", mateIn, 201).ID
 	mateURL := pathFor("/api/mates/%d", mate)
+	t.Run("multi tag fuzzy ranking and validation", func(t *testing.T) {
+		for _, kind := range []string{"exchange", "mates"} {
+			base := "/api/mates"
+			if kind == "exchange" {
+				base = "/api/exchange/posts"
+			}
+			marker := prefix + kind + "标签"
+			ids := []int64{}
+			for _, tags := range [][]string{{"摄影", "户外"}, {"校园摄影"}, {"音乐"}} {
+				var body any = model.ExchangeInput{Title: marker, Content: "多标签排序的测试正文内容。", Tags: tags}
+				if kind == "mates" {
+					body = model.MateInput{Title: marker, Details: "多标签排序的测试详情内容。", Tags: tags, Contact: "私聊联系", Duration: "周末"}
+				}
+				ids = append(ids, call[idResponse](t, alice, "POST", base, body, 201).ID)
+			}
+			query := base + "?q=" + url.QueryEscape(marker) + "&tag=" + url.QueryEscape("摄影") + "&tag=" + url.QueryEscape("户外") + "&pageSize=1"
+			if kind == "exchange" {
+				first := call[model.Page[model.Exchange]](t, guest, "GET", query, nil, 200)
+				second := call[model.Page[model.Exchange]](t, guest, "GET", query+"&page=2", nil, 200)
+				if first.Total != 2 || len(first.Items) != 1 || first.Items[0].ID != ids[0] || len(second.Items) != 1 || second.Items[0].ID != ids[1] {
+					t.Fatal("exchange fuzzy ranking/pagination", first, second)
+				}
+			} else {
+				first := call[model.Page[model.Mate]](t, guest, "GET", query, nil, 200)
+				second := call[model.Page[model.Mate]](t, guest, "GET", query+"&page=2", nil, 200)
+				if first.Total != 2 || len(first.Items) != 1 || first.Items[0].ID != ids[0] || len(second.Items) != 1 || second.Items[0].ID != ids[1] {
+					t.Fatal("mate fuzzy ranking/pagination", first, second)
+				}
+			}
+			call[messageResponse](t, guest, "GET", base+"?tag="+url.QueryEscape(strings.Repeat("长", 17)), nil, 400)
+			for _, id := range ids {
+				call[messageResponse](t, alice, "DELETE", pathFor(base+"/%d", id), nil, 200)
+			}
+		}
+	})
 	var conversation int64
 	t.Run("mate privacy applications and concurrent approval", func(t *testing.T) {
 		for _, c := range []testClient{guest, bob} {
@@ -500,7 +573,7 @@ func TestIntegration(t *testing.T) {
 		call[messageResponse](t, alice, "PATCH", mateURL, mateIn, 200)
 		matches := call[model.Page[model.Mate]](t, guest, "GET", "/api/mates?q="+prefix+"&tag="+url.QueryEscape("户外"), nil, 200)
 		if matches.Total != 1 {
-			t.Fatal("tag filter failed")
+			t.Fatalf("tag filter failed: %+v", matches)
 		}
 		call[messageResponse](t, alice, "POST", mateURL+"/apply", struct {
 			Message string `json:"message"`

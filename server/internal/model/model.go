@@ -23,21 +23,21 @@ type Author struct {
 }
 
 type Exchange struct {
-	ID            int64   `json:"id"`
-	AuthorID      int64   `json:"-"`
-	Kind          string  `json:"kind"`
-	Title         string  `json:"title"`
-	Content       string  `json:"content"`
-	ImageURL      *string `json:"imageUrl"`
-	Status        string  `json:"status"`
-	CreatedAt     string  `json:"createdAt"`
-	UpdatedAt     string  `json:"updatedAt"`
-	LikeCount     int     `json:"likeCount"`
-	FavoriteCount int     `json:"favoriteCount"`
-	CommentCount  int     `json:"commentCount"`
-	Liked         bool    `json:"liked"`
-	Favorited     bool    `json:"favorited"`
-	Author        Author  `json:"author"`
+	ID            int64    `json:"id"`
+	AuthorID      int64    `json:"-"`
+	Tags          []string `json:"tags"`
+	Title         string   `json:"title"`
+	Content       string   `json:"content"`
+	ImageURL      *string  `json:"imageUrl"`
+	Status        string   `json:"status"`
+	CreatedAt     string   `json:"createdAt"`
+	UpdatedAt     string   `json:"updatedAt"`
+	LikeCount     int      `json:"likeCount"`
+	FavoriteCount int      `json:"favoriteCount"`
+	CommentCount  int      `json:"commentCount"`
+	Liked         bool     `json:"liked"`
+	Favorited     bool     `json:"favorited"`
+	Author        Author   `json:"author"`
 }
 
 type Comment struct {
@@ -167,7 +167,6 @@ type AdminContent struct {
 	ID             int64  `json:"id"`
 	Title          string `json:"title"`
 	Content        string `json:"content"`
-	Kind           string `json:"kind,omitempty"`
 	Status         string `json:"status"`
 	CreatedAt      string `json:"createdAt"`
 	AuthorNickname string `json:"authorNickname"`
@@ -195,10 +194,10 @@ type List[T any] struct {
 }
 
 type ExchangeInput struct {
-	Kind     string  `json:"kind"`
-	Title    string  `json:"title"`
-	Content  string  `json:"content"`
-	ImageURL *string `json:"imageUrl"`
+	Tags     []string `json:"tags"`
+	Title    string   `json:"title"`
+	Content  string   `json:"content"`
+	ImageURL *string  `json:"imageUrl"`
 }
 
 type MateInput struct {
@@ -227,8 +226,7 @@ type ReportAction struct {
 
 type Filter struct {
 	Query    string
-	Kind     string
-	Tag      string
+	Tags     []string
 	Mine     bool
 	Page     int
 	PageSize int

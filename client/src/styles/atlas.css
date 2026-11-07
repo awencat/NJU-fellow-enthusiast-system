@@ -145,7 +145,6 @@
   padding: 20px 22px 12px;
   border: 0;
   border-bottom: 3px solid var(--atlas-ink);
-  background: url("/images/atlas/campus.svg") no-repeat center 85% / 100% auto;
 }
 .auth-story { border-right: 1px dashed var(--atlas-line); }
 .auth-story h1 { border-bottom: 2px solid var(--atlas-plum); padding-bottom: 8px; color: var(--atlas-plum); }
